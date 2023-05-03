@@ -6,11 +6,11 @@ package fr.diginamic.openfoodfacts;
 
 /**
  *
- * @author zdamy
+ * @author dmouchagues
  */
 public class OpenFoodFacts {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
     }
 }
