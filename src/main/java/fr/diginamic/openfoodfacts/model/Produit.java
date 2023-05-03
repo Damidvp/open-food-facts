@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class Produit {
     private String nom;
     private Character score;
     @OneToMany
-    private List<Ingredient> listeIngredients;
+    private List<Ingredient> listeIngredients = new ArrayList<>();
     private Float energie100g;
     private Float graisse100g;
     private Float sucres100g;
@@ -53,9 +54,9 @@ public class Produit {
     private Float betaCarotene100g;
     private Boolean presenceHuilePalme;
     @OneToMany
-    private List<Allergene> listeAllergenes;
+    private List<Allergene> listeAllergenes = new ArrayList<>();
     @OneToMany
-    private List<Additif> listeAdditifs;
+    private List<Additif> listeAdditifs = new ArrayList<>();
 
     /**
      *
@@ -552,6 +553,10 @@ public class Produit {
     public void setListeAdditifs(List<Additif> listeAdditifs) {
         this.listeAdditifs = listeAdditifs;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Produit{" + "id=" + id + ", marque=" + marque + ", categorie=" + categorie + ", nom=" + nom + ", score=" + score + ", listeIngredients=" + listeIngredients + ", energie100g=" + energie100g + ", graisse100g=" + graisse100g + ", sucres100g=" + sucres100g + ", fibres100g=" + fibres100g + ", proteines100g=" + proteines100g + ", sel100g=" + sel100g + ", vitA100g=" + vitA100g + ", vitD100g=" + vitD100g + ", vitE100g=" + vitE100g + ", vitK100g=" + vitK100g + ", vitC100g=" + vitC100g + ", vitB1100g=" + vitB1100g + ", vitB2100g=" + vitB2100g + ", vitPP100g=" + vitPP100g + ", vitB6100g=" + vitB6100g + ", vitB9100g=" + vitB9100g + ", vitB12100g=" + vitB12100g + ", calcium100g=" + calcium100g + ", magnesium100g=" + magnesium100g + ", iron100g=" + iron100g + ", fer100g=" + fer100g + ", betaCarotene100g=" + betaCarotene100g + ", presenceHuilePalme=" + presenceHuilePalme + ", listeAllergenes=" + listeAllergenes + ", listeAdditifs=" + listeAdditifs + '}';
+    }
+   
 }
