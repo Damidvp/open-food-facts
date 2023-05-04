@@ -4,20 +4,32 @@
  */
 package fr.diginamic.openfoodfacts.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.UniqueConstraint;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author dmouchagues
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Categorie.findByName", query = "SELECT c FROM Categorie c WHERE c.nom = :nom"),
+})
 public class Categorie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    @OneToMany(mappedBy = "categorie")
+    private List<Produit> produits = new ArrayList<>();
 
     /**
      *
@@ -50,4 +62,14 @@ public class Categorie {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+    
+    
 }

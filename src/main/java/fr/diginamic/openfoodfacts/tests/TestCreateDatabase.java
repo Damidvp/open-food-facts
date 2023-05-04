@@ -6,16 +6,21 @@ package fr.diginamic.openfoodfacts.tests;
 
 import fr.diginamic.openfoodfacts.model.Additif;
 import fr.diginamic.openfoodfacts.model.Allergene;
+import fr.diginamic.openfoodfacts.model.Categorie;
 import fr.diginamic.openfoodfacts.model.Ingredient;
+import fr.diginamic.openfoodfacts.model.Marque;
 import fr.diginamic.openfoodfacts.model.Produit;
 import fr.diginamic.openfoodfacts.model.Stock;
 import fr.diginamic.openfoodfacts.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
  *
- * @author zdamy
+ * @author dmouchagues
  */
 public class TestCreateDatabase {
 
@@ -25,15 +30,51 @@ public class TestCreateDatabase {
      */
     public static void main(String[] args) {
         EntityManager em = JPAUtils.getInstance().getEntityManager();
-        
+        createDatabase(em); 
+        em.close();
+    }
+    
+    public static void createDatabase(EntityManager em){
         List<Produit> allProduits = Stock.getInstance().getProduits();
+        List<Marque> marques = new ArrayList<>();
+        List<Categorie> categories = new ArrayList<>();
+        List<Ingredient> ingredients = new ArrayList<>();
+        List<Additif> additifs = new ArrayList<>();
+        List<Allergene> allergenes = new ArrayList<>();
+        HashSet<String> nomsMarques = new HashSet<>();
+        HashSet<String> nomsCategories = new HashSet<>();
+        HashSet<String> nomsIngredients = new HashSet<>();
+        HashSet<String> nomsAdditifs = new HashSet<>();
+        HashSet<String> nomsAllergenes = new HashSet<>();
+        
         em.getTransaction().begin();
         for(Produit unProduit : allProduits){
-            em.persist(unProduit.getCategorie());
-            em.persist(unProduit.getMarque());
+            Marque marque = unProduit.getMarque();
+            Categorie categorie = unProduit.getCategorie();
+            
+            if(nomsMarques.add(marque.getNom())){
+                marque.getProduits().add(unProduit);
+                marques.add(marque);
+                em.persist(marque);
+            } else {
+                unProduit.setMarque(chercherMarque(marques, marque.getNom()));
+            }
+            if(nomsCategories.add(categorie.getNom())){
+                categorie.getProduits().add(unProduit);
+                categories.add(categorie);
+                em.persist(categorie);
+            } else {
+                unProduit.setCategorie(chercherCategorie(categories, categorie.getNom()));
+            }
             em.persist(unProduit);
+            
             for(Additif unAdditif : unProduit.getListeAdditifs()){
-                em.persist(unAdditif);
+                if(nomsAdditifs.add(unAdditif.getNom())){
+                    additifs.add(unAdditif);
+                    em.persist(unAdditif);
+                } else {
+                    unProduit.getListeAdditifs().add(chercherAdditif(additifs, unAdditif.getNom()));
+                }
             }
             for(Allergene unAllergene : unProduit.getListeAllergenes()){
                 em.persist(unAllergene);
@@ -43,8 +84,60 @@ public class TestCreateDatabase {
             }
         }
         em.getTransaction().commit();
-        
-        em.close();
     }
     
+    public static Marque chercherMarque(List<Marque> liste, String nom){
+        Marque marqueTrouvee = null;
+        for(Marque m : liste){
+            if(m.getNom().equals(nom)){
+                marqueTrouvee = m;
+                break;
+            }
+        }
+        return marqueTrouvee;
+    }
+    
+    public static Categorie chercherCategorie(List<Categorie> liste, String nom){
+        Categorie categorieTrouvee = null;
+        for(Categorie c : liste){
+            if(c.getNom().equals(nom)){
+                categorieTrouvee = c;
+                break;
+            }
+        }
+        return categorieTrouvee;
+    }
+    
+    public static Ingredient chercherIngredient(List<Ingredient> liste, String nom){
+        Ingredient ingredientTrouve = null;
+        for(Ingredient i : liste){
+            if(i.getNom().equals(nom)){
+                ingredientTrouve = i;
+                break;
+            }
+        }
+        return ingredientTrouve;
+    }
+    
+    public static Additif chercherAdditif(List<Additif> liste, String nom){
+        Additif additifTrouve = null;
+        for(Additif a : liste){
+            if(a.getNom().equals(nom)){
+                additifTrouve = a;
+                break;
+            }
+        }
+        return additifTrouve;
+    }
+    
+    public static Allergene chercherAllergene(List<Allergene> liste, String nom){
+        Allergene allergeneTrouve = null;
+        for(Allergene a : liste){
+            if(a.getNom().equals(nom)){
+                allergeneTrouve = a;
+                break;
+            }
+        }
+        return allergeneTrouve;
+    }
 }

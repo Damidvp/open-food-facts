@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +29,14 @@ public class Stock {
             List<String> linesFile = new ArrayList<>();
             Path pathFile = Paths.get("c:/dev-java/open-food-facts.csv");
             linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
+            
+            //HashSet permettant de stocker les noms des entités de manière unique
+            HashSet<String> nomsCategories = new HashSet<String>();
+            HashSet<String> nomsMarques = new HashSet<String>();
+            HashSet<String> nomsIngredients = new HashSet<String>();
+            HashSet<String> nomsAllergenes = new HashSet<String>();
+            HashSet<String> nomsAdditifs = new HashSet<String>();
+            
             for(String line : linesFile){
                 if(linesFile.indexOf(line) > 0){
                     Produit produit = new Produit();
@@ -38,7 +47,7 @@ public class Stock {
                     produit.setCategorie(categorie);
                     
                     Marque marque = new Marque();
-                    marque.setNom(tokens[1]);
+                    marque.setNom(formatStr(tokens[1]));
                     produit.setMarque(marque);
                     
                     produit.setNom(tokens[2]);
@@ -71,25 +80,56 @@ public class Stock {
                     List<Allergene> allergenes = new ArrayList<>();
                     List<Additif> additifs = new ArrayList<>();
                     
-                    String[] tokensIngredients = tokens[4].split(",");
-                    String[] tokensAllergenes = tokens[28].split(",");
-                    String[] tokensAdditifs = tokens[29].split(",");
+                    String[] tokensIngredients;
+                    if(tokens[4].contains(",")){
+                        tokensIngredients = tokens[4].split(",");
+                    } else if (tokens[4].contains("-")){
+                        tokensIngredients = tokens[4].split("\\-");
+                    } else {
+                        tokensIngredients = tokens[4].split("\\;");
+                    }
+                    String[] tokensAllergenes;
+                    if(tokens[28].contains(",")){
+                        tokensAllergenes = tokens[28].split(",");
+                    } else if (tokens[28].contains("-")){
+                        tokensAllergenes = tokens[28].split("\\-");
+                    } else {
+                        tokensAllergenes = tokens[28].split("\\;");
+                    }
+                    String[] tokensAdditifs;
+                    if(tokens[29].contains(",")){
+                        tokensAdditifs = tokens[29].split(",");
+                    } else if (tokens[29].contains("-")){
+                        tokensAdditifs = tokens[29].split("\\-");
+                    } else {
+                        tokensAdditifs = tokens[29].split("\\;");
+                    }
                     
                     for(String unIngredient : tokensIngredients){
                         Ingredient ingredient = new Ingredient();
-                        ingredient.setNom(unIngredient.substring(0, unIngredient.length() < 200 ? unIngredient.length() : 199));
-                        ingredients.add(ingredient);
+                        String nom = formatStr((unIngredient.length() < 256) ? unIngredient : unIngredient.substring(0, 255));
+                        ingredient.setNom(nom);
+                        if(nomsIngredients.add(ingredient.getNom().toLowerCase())){
+                            ingredients.add(ingredient);
+                        }
                     }
                     for(String unAllergene : tokensAllergenes){
                         Allergene allergene = new Allergene();
-                        allergene.setNom(unAllergene.substring(0, unAllergene.length() < 200 ? unAllergene.length() : 199));
-                        allergenes.add(allergene);
+                        String nom = formatStr((unAllergene.length() < 256) ? unAllergene : unAllergene.substring(0, 255));
+                        allergene.setNom(nom);
+                        if(nomsAllergenes.add(allergene.getNom().toLowerCase())){
+                            allergenes.add(allergene);
+                        }
                     }
                     for(String unAdditif : tokensAdditifs){
                         Additif additif = new Additif();
-                        additif.setNom(unAdditif.substring(0, unAdditif.length() < 200 ? unAdditif.length() : 199));
-                        additifs.add(additif);
+                        String nom = formatStr((unAdditif.length() < 256) ? unAdditif : unAdditif.substring(0, 255));
+                        additif.setNom(nom);
+                        if(nomsAdditifs.add(additif.getNom().toLowerCase())){
+                            additifs.add(additif);
+                        }
                     }
+                    
                     produit.setListeIngredients(ingredients);
                     produit.setListeAllergenes(allergenes);
                     produit.setListeAdditifs(additifs);
@@ -119,9 +159,23 @@ public class Stock {
         try{
             result = Float.valueOf(token);
         } catch(NumberFormatException e){
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return result;
+    }
+    
+    private String formatStr(String s){
+        String chaineFormat = "";
+        if(!s.equals("")){
+            chaineFormat = s.replaceAll("\\*", "")
+                .replaceAll("_", "")
+                .replaceAll("\\(.*?\\)", "")
+                .replaceAll("\\[.*?\\]", "")
+                .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "")
+                .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", "");
+                
+        }
+        return chaineFormat;
     }
     
 }
