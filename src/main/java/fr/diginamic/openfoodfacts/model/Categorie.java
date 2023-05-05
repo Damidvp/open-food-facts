@@ -22,7 +22,8 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c")
+    @NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c"),
+    @NamedQuery(name = "Categorie.findByName", query = "SELECT c FROM Categorie c WHERE nom = :nom")
 })
 public class Categorie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,10 +64,18 @@ public class Categorie {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Produit> getProduits() {
         return produits;
     }
 
+    /**
+     *
+     * @param produits
+     */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }

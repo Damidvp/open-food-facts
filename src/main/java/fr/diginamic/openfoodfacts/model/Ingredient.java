@@ -21,11 +21,13 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Ingredient.findAll", query = "SELECT i FROM Ingredient i")
+    @NamedQuery(name = "Ingredient.findAll", query = "SELECT i FROM Ingredient i"),
+    @NamedQuery(name = "Ingredient.findByName", query = "SELECT i FROM Ingredient i WHERE nom = :nom")
 })
 public class Ingredient {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 1000)
     private String nom;
     @ManyToMany(mappedBy = "listeIngredients")
     private List<Produit> produits = new ArrayList<>();

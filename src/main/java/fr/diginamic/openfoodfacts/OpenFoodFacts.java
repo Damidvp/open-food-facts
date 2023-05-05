@@ -12,6 +12,10 @@ import fr.diginamic.openfoodfacts.controller.MainController;
  */
 public class OpenFoodFacts {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         MainController.getInstance().insertData();
     }

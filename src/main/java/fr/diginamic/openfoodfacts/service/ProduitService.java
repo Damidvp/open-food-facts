@@ -18,44 +18,73 @@ public class ProduitService implements IService<Produit> {
     
     private ProduitService(){}
     
+    /**
+     *
+     * @return
+     */
     public static ProduitService getInstance(){
         return INSTANCE;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Produit get(long id) {
         Produit produit = null;
         try{
             produit = produitDao.get(id);
-            produitDao.closeEM();
         } catch(Exception e){
             System.out.println("Produit inexistant");
         }
         return produit;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Produit> getAll() {
         List<Produit> liste = produitDao.getAll();
-        produitDao.closeEM();
         return liste;
     }
 
+    /**
+     *
+     * @param produit
+     * @param params
+     */
     @Override
     public void update(Produit produit, String[] params) {
         produitDao.update(produit, params);
-        produitDao.closeEM();
     }
 
+    /**
+     *
+     * @param produit
+     */
     @Override
     public void save(Produit produit) {
         produitDao.save(produit);
-        produitDao.closeEM();
     }
 
+    /**
+     *
+     * @param produit
+     */
     @Override
     public void delete(Produit produit) {
         produitDao.delete(produit);
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void closeEM() {
         produitDao.closeEM();
     }
 }

@@ -21,21 +21,49 @@ public class AdditifDAO implements IDAO<Additif> {
     
     private AdditifDAO(){}
     
+    /**
+     *
+     * @return the instance of AdditifDAO
+     */
     public static AdditifDAO getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id of an Additif
+     * @return the Additif which has been found
+     */
     @Override
     public Additif get(long id) {
         return em.find(Additif.class, id);
     }
+    
+    /**
+     *
+     * @param name of an Additif
+     * @return the Additif which has been found
+     */
+    public Additif getByName(String name){
+        TypedQuery<Additif> query = em.createNamedQuery("Additif.findByName", Additif.class);
+        query.setParameter("nom", name);
+        return query.getResultList().get(0);
+    }
 
+    /**
+     *
+     * @return the list of all occurences of Additif
+     */
     @Override
     public List<Additif> getAll() {
         TypedQuery<Additif> query = em.createNamedQuery("Additif.findAll", Additif.class);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param additif to save
+     */
     @Override
     public void save(Additif additif) {
         em.getTransaction().begin();
@@ -43,6 +71,11 @@ public class AdditifDAO implements IDAO<Additif> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param additif to update
+     * @param params which contains fields to update
+     */
     @Override
     public void update(Additif additif, String[] params) {
         additif.setNom(params[0]);
@@ -51,6 +84,10 @@ public class AdditifDAO implements IDAO<Additif> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param additif to delete
+     */
     @Override
     public void delete(Additif additif) {
         em.getTransaction().begin();
@@ -58,6 +95,9 @@ public class AdditifDAO implements IDAO<Additif> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     */
     @Override
     public void closeEM() {
         em.close();

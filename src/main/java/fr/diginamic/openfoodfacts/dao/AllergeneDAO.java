@@ -21,21 +21,49 @@ public class AllergeneDAO implements IDAO<Allergene> {
     
     private AllergeneDAO(){}
     
+    /**
+     *
+     * @return instance of AllergeneDAO
+     */
     public static AllergeneDAO getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id of an Allergene
+     * @return the Allergene which has been found
+     */
     @Override
     public Allergene get(long id) {
         return em.find(Allergene.class, id);
     }
+    
+    /**
+     *
+     * @param name of an Allergene
+     * @return the Allergene which has been found
+     */
+    public Allergene getByName(String name){
+        TypedQuery<Allergene> query = em.createNamedQuery("Allergene.findByName", Allergene.class);
+        query.setParameter("nom", name);
+        return query.getResultList().get(0);
+    }
 
+    /**
+     *
+     * @return the list of all occurences of Allergene
+     */
     @Override
     public List<Allergene> getAll() {
         TypedQuery<Allergene> query = em.createNamedQuery("Allergene.findAll", Allergene.class);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param allergene to save
+     */
     @Override
     public void save(Allergene allergene) {
         em.getTransaction().begin();
@@ -43,6 +71,11 @@ public class AllergeneDAO implements IDAO<Allergene> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param allergene to update
+     * @param params array which contains fields to update
+     */
     @Override
     public void update(Allergene allergene, String[] params) {
         allergene.setNom(params[0]);
@@ -51,6 +84,10 @@ public class AllergeneDAO implements IDAO<Allergene> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param allergene to delete
+     */
     @Override
     public void delete(Allergene allergene) {
         em.getTransaction().begin();
@@ -58,6 +95,9 @@ public class AllergeneDAO implements IDAO<Allergene> {
         em.getTransaction().commit();
     }
 
+    /**
+     * Closes EntityManager
+     */
     @Override
     public void closeEM() {
         em.close();

@@ -28,7 +28,16 @@ public class IngredientService implements IService<Ingredient> {
         Ingredient ingredient = null;
         try{
             ingredient = ingredientDao.get(id);
-            ingredientDao.closeEM();
+        } catch(Exception e){
+            System.out.println("Ingrédient inexistant");
+        }
+        return ingredient;
+    }
+    
+    public Ingredient getByName(String name){
+        Ingredient ingredient = null;
+        try{
+            ingredient = ingredientDao.getByName(name);
         } catch(Exception e){
             System.out.println("Ingrédient inexistant");
         }
@@ -38,25 +47,26 @@ public class IngredientService implements IService<Ingredient> {
     @Override
     public List<Ingredient> getAll() {
         List<Ingredient> liste = ingredientDao.getAll();
-        ingredientDao.closeEM();
         return liste;
     }
 
     @Override
     public void update(Ingredient ingredient, String[] params) {
         ingredientDao.update(ingredient, params);
-        ingredientDao.closeEM();
     }
 
     @Override
     public void save(Ingredient ingredient) {
         ingredientDao.save(ingredient);
-        ingredientDao.closeEM();
     }
 
     @Override
     public void delete(Ingredient ingredient) {
         ingredientDao.delete(ingredient);
+    }
+
+    @Override
+    public void closeEM() {
         ingredientDao.closeEM();
     }
     

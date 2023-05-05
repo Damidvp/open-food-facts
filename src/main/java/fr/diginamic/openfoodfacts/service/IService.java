@@ -9,11 +9,44 @@ import java.util.List;
 /**
  *
  * @author dmouchagues
+ * @param <T>
  */
 public interface IService<T> {
+
+    /**
+     *
+     * @param id
+     * @return
+     */
     public T get(long id);
+
+    /**
+     *
+     * @return
+     */
     public List<T> getAll();
+
+    /**
+     *
+     * @param t
+     * @param params
+     */
     public void update(T t, String[] params);
+
+    /**
+     *
+     * @param t
+     */
     public void save(T t);
+
+    /**
+     *
+     * @param t
+     */
     public void delete(T t);
+
+    /**
+     *
+     */
+    public void closeEM();
 }

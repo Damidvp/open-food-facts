@@ -21,7 +21,8 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Marque.findAll", query = "SELECT m FROM Marque m")
+    @NamedQuery(name = "Marque.findAll", query = "SELECT m FROM Marque m"),
+    @NamedQuery(name = "Marque.findByName", query = "SELECT m FROM Marque m WHERE nom = :nom")
 })
 public class Marque {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,10 +63,18 @@ public class Marque {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Produit> getProduits() {
         return produits;
     }
 
+    /**
+     *
+     * @param produits
+     */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }

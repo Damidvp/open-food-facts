@@ -4,6 +4,7 @@
  */
 package fr.diginamic.openfoodfacts.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,11 +21,13 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Additif.findAll", query = "SELECT a FROM Additif a")
+    @NamedQuery(name = "Additif.findAll", query = "SELECT a FROM Additif a"),
+    @NamedQuery(name = "Additif.findByName", query = "SELECT a FROM Additif a WHERE nom = :nom")
 })
 public class Additif {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 1000)
     private String nom;
     @ManyToMany(mappedBy = "listeAdditifs")
     private List<Produit> produits = new ArrayList<>();

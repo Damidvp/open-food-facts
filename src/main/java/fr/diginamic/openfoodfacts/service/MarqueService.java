@@ -28,7 +28,16 @@ public class MarqueService implements IService<Marque> {
         Marque marque = null;
         try{
             marque = marqueDao.get(id);
-            marqueDao.closeEM();
+        } catch(Exception e){
+            System.out.println("Marque inexistante");
+        }
+        return marque;
+    }
+    
+    public Marque getByName(String name){
+        Marque marque = null;
+        try{
+            marque = marqueDao.getByName(name);
         } catch(Exception e){
             System.out.println("Marque inexistante");
         }
@@ -38,25 +47,26 @@ public class MarqueService implements IService<Marque> {
     @Override
     public List<Marque> getAll() {
         List<Marque> liste = marqueDao.getAll();
-        marqueDao.closeEM();
         return liste;
     }
 
     @Override
     public void update(Marque marque, String[] params) {
         marqueDao.update(marque, params);
-        marqueDao.closeEM();
     }
 
     @Override
     public void save(Marque marque) {
         marqueDao.save(marque);
-        marqueDao.closeEM();
     }
 
     @Override
     public void delete(Marque marque) {
         marqueDao.delete(marque);
+    }
+
+    @Override
+    public void closeEM() {
         marqueDao.closeEM();
     }
 }

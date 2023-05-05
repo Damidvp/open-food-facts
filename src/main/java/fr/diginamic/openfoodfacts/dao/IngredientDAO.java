@@ -21,21 +21,49 @@ public class IngredientDAO implements IDAO<Ingredient>{
     
     private IngredientDAO(){}
     
+    /**
+     *
+     * @return the instance of IngredientDAO
+     */
     public static IngredientDAO getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id of an Ingredient
+     * @return the Ingredient which has been found
+     */
     @Override
     public Ingredient get(long id) {
         return em.find(Ingredient.class, id);
     }
+    
+    /**
+     *
+     * @param name of an Ingredient
+     * @return the Ingredient which has been found
+     */
+    public Ingredient getByName(String name){
+        TypedQuery<Ingredient> query = em.createNamedQuery("Ingredient.findByName", Ingredient.class);
+        query.setParameter("nom", name);
+        return query.getResultList().get(0);
+    }
 
+    /**
+     *
+     * @return the list of all occurences of Ingredient
+     */
     @Override
     public List<Ingredient> getAll() {
         TypedQuery<Ingredient> query = em.createNamedQuery("Ingredient.findAll", Ingredient.class);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param ingredient to save
+     */
     @Override
     public void save(Ingredient ingredient) {
         em.getTransaction().begin();
@@ -43,6 +71,11 @@ public class IngredientDAO implements IDAO<Ingredient>{
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param ingredient to update
+     * @param params array which contains fields to update
+     */
     @Override
     public void update(Ingredient ingredient, String[] params) {
         ingredient.setNom(params[0]);
@@ -51,6 +84,10 @@ public class IngredientDAO implements IDAO<Ingredient>{
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param ingredient to delete
+     */
     @Override
     public void delete(Ingredient ingredient) {
         em.getTransaction().begin();
@@ -58,6 +95,9 @@ public class IngredientDAO implements IDAO<Ingredient>{
         em.getTransaction().commit();
     }
 
+    /**
+     * Closes the EntityManager
+     */
     @Override
     public void closeEM() {
         em.close();

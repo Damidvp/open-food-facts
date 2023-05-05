@@ -28,7 +28,16 @@ public class CategorieService implements IService<Categorie>{
         Categorie categorie = null;
         try{
             categorie = categorieDao.get(id);
-            categorieDao.closeEM();
+        } catch(Exception e){
+            System.out.println("Catégorie inexistante");
+        }
+        return categorie;
+    }
+    
+    public Categorie getByName(String name){
+        Categorie categorie = null;
+        try{
+            categorie = categorieDao.getByName(name);
         } catch(Exception e){
             System.out.println("Catégorie inexistante");
         }
@@ -38,25 +47,26 @@ public class CategorieService implements IService<Categorie>{
     @Override
     public List<Categorie> getAll() {
         List<Categorie> liste = categorieDao.getAll();
-        categorieDao.closeEM();
         return liste;
     }
 
     @Override
     public void update(Categorie categorie, String[] params) {
         categorieDao.update(categorie, params);
-        categorieDao.closeEM();
     }
 
     @Override
     public void save(Categorie categorie) {
         categorieDao.save(categorie);
-        categorieDao.closeEM();
     }
 
     @Override
     public void delete(Categorie categorie) {
         categorieDao.delete(categorie);
+    }
+
+    @Override
+    public void closeEM() {
         categorieDao.closeEM();
     }
     

@@ -21,21 +21,49 @@ public class MarqueDAO implements IDAO<Marque>{
     
     private MarqueDAO(){}
     
+    /**
+     *
+     * @return
+     */
     public static MarqueDAO getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Marque get(long id) {
         return em.find(Marque.class, id);
     }
+    
+    /**
+     *
+     * @param name
+     * @return
+     */
+    public Marque getByName(String name){
+        TypedQuery<Marque> query = em.createNamedQuery("Marque.findByName", Marque.class);
+        query.setParameter("nom", name);
+        return query.getResultList().get(0);
+    }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Marque> getAll() {
         TypedQuery<Marque> query = em.createNamedQuery("Marque.findAll", Marque.class);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param marque
+     */
     @Override
     public void save(Marque marque) {
         em.getTransaction().begin();
@@ -43,6 +71,11 @@ public class MarqueDAO implements IDAO<Marque>{
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param marque
+     * @param params
+     */
     @Override
     public void update(Marque marque, String[] params) {
         marque.setNom(params[0]);
@@ -51,6 +84,10 @@ public class MarqueDAO implements IDAO<Marque>{
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param marque
+     */
     @Override
     public void delete(Marque marque) {
         em.getTransaction().begin();
@@ -58,6 +95,9 @@ public class MarqueDAO implements IDAO<Marque>{
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     */
     @Override
     public void closeEM() {
         em.close();

@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author dmouchagues
- * Classe Stock, créant une liste de tous les produits
+ * Classe qui parse le fichier CSV, tout en créant une liste de tous les produits
  */
 public class Stock {
     private final static Stock INSTANCE = new Stock();
@@ -27,7 +27,7 @@ public class Stock {
     private Stock(){
         try {
             List<String> linesFile = new ArrayList<>();
-            Path pathFile = Paths.get("c:/dev-java/open-food-facts.csv");
+            Path pathFile = Paths.get("c:/dev-java/open-food-facts.csv"); //Chemin du fichier CSV
             linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
             
             //HashSet permettant de stocker les noms des entités de manière unique
@@ -81,29 +81,13 @@ public class Stock {
                     tokensMarques = tokens[1].split(",");
                     
                     String[] tokensIngredients;
-                    if(tokens[4].contains(",")){
-                        tokensIngredients = tokens[4].split(",");
-                    } else if (tokens[4].contains("-")){
-                        tokensIngredients = tokens[4].split("\\-");
-                    } else {
-                        tokensIngredients = tokens[4].split("\\;");
-                    }
+                    tokensIngredients = tokens[4].split(",|;");
+                    
                     String[] tokensAllergenes;
-                    if(tokens[28].contains(",")){
-                        tokensAllergenes = tokens[28].split(",");
-                    } else if (tokens[28].contains("-")){
-                        tokensAllergenes = tokens[28].split("\\-");
-                    } else {
-                        tokensAllergenes = tokens[28].split("\\;");
-                    }
+                    tokensAllergenes = tokens[28].split(",|;");
+                    
                     String[] tokensAdditifs;
-                    if(tokens[29].contains(",")){
-                        tokensAdditifs = tokens[29].split(",");
-                    } else if (tokens[29].contains("-")){
-                        tokensAdditifs = tokens[29].split("\\-");
-                    } else {
-                        tokensAdditifs = tokens[29].split("\\;");
-                    }
+                    tokensAdditifs = tokens[29].split(",|;");
                     
                     for(String uneMarque : tokensMarques){
                         Marque marque = new Marque();
@@ -112,27 +96,33 @@ public class Stock {
                         marques.add(marque);
                     }
                     for(String unIngredient : tokensIngredients){
-                        Ingredient ingredient = new Ingredient();
-                        String nom = formatStr((unIngredient.length() < 256) ? unIngredient : unIngredient.substring(0, 255));
-                        ingredient.setNom(nom);
-                        if(nomsIngredients.add(ingredient.getNom().toLowerCase())){
-                            ingredients.add(ingredient);
+                        if(!unIngredient.equals("")){
+                            Ingredient ingredient = new Ingredient();
+                            String nom = formatStr(unIngredient);
+                            ingredient.setNom(nom);
+                            if(nomsIngredients.add(ingredient.getNom().toLowerCase())){
+                                ingredients.add(ingredient);
+                            }
                         }
                     }
                     for(String unAllergene : tokensAllergenes){
-                        Allergene allergene = new Allergene();
-                        String nom = formatStr((unAllergene.length() < 256) ? unAllergene : unAllergene.substring(0, 255));
-                        allergene.setNom(nom);
-                        if(nomsAllergenes.add(allergene.getNom().toLowerCase())){
-                            allergenes.add(allergene);
+                        if(!unAllergene.equals("")){
+                            Allergene allergene = new Allergene();
+                            String nom = formatStr(unAllergene);
+                            allergene.setNom(nom);
+                            if(nomsAllergenes.add(allergene.getNom().toLowerCase())){
+                                allergenes.add(allergene);
+                            }
                         }
                     }
                     for(String unAdditif : tokensAdditifs){
-                        Additif additif = new Additif();
-                        String nom = formatStr((unAdditif.length() < 256) ? unAdditif : unAdditif.substring(0, 255));
-                        additif.setNom(nom);
-                        if(nomsAdditifs.add(additif.getNom().toLowerCase())){
-                            additifs.add(additif);
+                        if(!unAdditif.equals("")){
+                            Additif additif = new Additif();
+                            String nom = formatStr(unAdditif);
+                            additif.setNom(nom);
+                            if(nomsAdditifs.add(additif.getNom().toLowerCase())){
+                                additifs.add(additif);
+                            }
                         }
                     }
                     
@@ -149,18 +139,33 @@ public class Stock {
         }
     }
     
+    /**
+     *
+     * @return the instance of Stock
+     */
     public static Stock getInstance(){
         return INSTANCE;
     }
 
+    /**
+     *
+     * @return the list of all Produit
+     */
     public List<Produit> getProduits() {
         return produits;
     }
 
+    /**
+     *
+     * @param produits list to set
+     */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
     
+    /**
+     * @return Float value of String. Return 0 if can't parse
+     */
     private Float getValueOf(String token){
         Float result = 0F;
         try{
@@ -176,6 +181,7 @@ public class Stock {
         if(!s.equals("")){
             chaineFormat = s.replaceAll("\\*", "")
                 .replaceAll("_", "")
+                .replaceAll("\\.", "")
                 .replaceAll("\\(.*?\\)", "")
                 .replaceAll("\\[.*?\\]", "")
                 .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "")

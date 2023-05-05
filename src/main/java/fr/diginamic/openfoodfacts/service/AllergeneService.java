@@ -27,7 +27,16 @@ public class AllergeneService implements IService<Allergene> {
         Allergene allergene = null;
         try{
             allergene = allergeneDao.get(id);
-            allergeneDao.closeEM();
+        } catch(Exception e){
+            System.out.println("Allergene inexistant");
+        }
+        return allergene;
+    }
+    
+    public Allergene getByName(String name){
+        Allergene allergene = null;
+        try{
+            allergene = allergeneDao.getByName(name);
         } catch(Exception e){
             System.out.println("Allergene inexistant");
         }
@@ -37,25 +46,26 @@ public class AllergeneService implements IService<Allergene> {
     @Override
     public List<Allergene> getAll() {
         List<Allergene> liste = allergeneDao.getAll();
-        allergeneDao.closeEM();
         return liste;
     }
 
     @Override
     public void update(Allergene allergene, String[] params) {
         allergeneDao.update(allergene, params);
-        allergeneDao.closeEM();
     }
 
     @Override
     public void save(Allergene allergene) {
         allergeneDao.save(allergene);
-        allergeneDao.closeEM();
     }
 
     @Override
     public void delete(Allergene allergene) {
         allergeneDao.delete(allergene);
+    }
+
+    @Override
+    public void closeEM() {
         allergeneDao.closeEM();
     }
 }
