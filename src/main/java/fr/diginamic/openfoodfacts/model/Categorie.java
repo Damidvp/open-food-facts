@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Categorie.findByName", query = "SELECT c FROM Categorie c WHERE c.nom = :nom"),
+    @NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c")
 })
 public class Categorie {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

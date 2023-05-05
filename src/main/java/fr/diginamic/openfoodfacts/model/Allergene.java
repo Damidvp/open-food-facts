@@ -8,16 +8,26 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author dmouchagues
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Allergene.findAll", query = "SELECT a FROM Allergene a")
+})
 public class Allergene {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom;
+    @ManyToMany(mappedBy = "listeAllergenes")
+    private List<Produit> produits = new ArrayList<>();
 
     /**
      *
@@ -50,4 +60,13 @@ public class Allergene {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+
 }

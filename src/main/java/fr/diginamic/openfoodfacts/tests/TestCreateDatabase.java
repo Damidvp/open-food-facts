@@ -49,16 +49,7 @@ public class TestCreateDatabase {
         
         em.getTransaction().begin();
         for(Produit unProduit : allProduits){
-            Marque marque = unProduit.getMarque();
             Categorie categorie = unProduit.getCategorie();
-            
-            if(nomsMarques.add(marque.getNom())){
-                marque.getProduits().add(unProduit);
-                marques.add(marque);
-                em.persist(marque);
-            } else {
-                unProduit.setMarque(chercherMarque(marques, marque.getNom()));
-            }
             if(nomsCategories.add(categorie.getNom())){
                 categorie.getProduits().add(unProduit);
                 categories.add(categorie);
@@ -68,6 +59,9 @@ public class TestCreateDatabase {
             }
             em.persist(unProduit);
             
+            for(Marque uneMarque : unProduit.getMarques()){
+                em.persist(uneMarque);
+            }
             for(Additif unAdditif : unProduit.getListeAdditifs()){
                 if(nomsAdditifs.add(unAdditif.getNom())){
                     additifs.add(unAdditif);

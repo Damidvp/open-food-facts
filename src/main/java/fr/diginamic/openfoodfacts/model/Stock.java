@@ -46,10 +46,6 @@ public class Stock {
                     categorie.setNom(tokens[0]);
                     produit.setCategorie(categorie);
                     
-                    Marque marque = new Marque();
-                    marque.setNom(formatStr(tokens[1]));
-                    produit.setMarque(marque);
-                    
                     produit.setNom(tokens[2]);
                     produit.setScore(tokens[3].charAt(0));
                     produit.setEnergie100g(getValueOf(tokens[5])); //Si la valeur est une String vide, on affecte 0
@@ -76,9 +72,13 @@ public class Stock {
                     produit.setBetaCarotene100g(getValueOf(tokens[26]));
                     produit.setPresenceHuilePalme(Boolean.valueOf(tokens[27]));
                     
+                    List<Marque> marques = new ArrayList<>();
                     List<Ingredient> ingredients = new ArrayList<>();
                     List<Allergene> allergenes = new ArrayList<>();
                     List<Additif> additifs = new ArrayList<>();
+                    
+                    String[] tokensMarques;
+                    tokensMarques = tokens[1].split(",");
                     
                     String[] tokensIngredients;
                     if(tokens[4].contains(",")){
@@ -105,6 +105,12 @@ public class Stock {
                         tokensAdditifs = tokens[29].split("\\;");
                     }
                     
+                    for(String uneMarque : tokensMarques){
+                        Marque marque = new Marque();
+                        String nom = formatStr(uneMarque);
+                        marque.setNom(nom);
+                        marques.add(marque);
+                    }
                     for(String unIngredient : tokensIngredients){
                         Ingredient ingredient = new Ingredient();
                         String nom = formatStr((unIngredient.length() < 256) ? unIngredient : unIngredient.substring(0, 255));
@@ -130,6 +136,7 @@ public class Stock {
                         }
                     }
                     
+                    produit.setMarques(marques);
                     produit.setListeIngredients(ingredients);
                     produit.setListeAllergenes(allergenes);
                     produit.setListeAdditifs(additifs);
@@ -173,7 +180,11 @@ public class Stock {
                 .replaceAll("\\[.*?\\]", "")
                 .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "")
                 .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", "");
-                
+            if(chaineFormat.length() > 0){
+                if(chaineFormat.charAt(0) == ' '){
+                    chaineFormat = chaineFormat.replaceFirst(" ", "");
+                }
+            }
         }
         return chaineFormat;
     }

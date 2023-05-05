@@ -8,10 +8,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,16 +22,19 @@ import java.util.List;
  * Classe Produit
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p")
+})
 public class Produit {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Marque marque;
+    @ManyToMany
+    private List<Marque> marques;
     @ManyToOne
     private Categorie categorie;
     private String nom;
     private Character score;
-    @OneToMany
+    @ManyToMany
     private List<Ingredient> listeIngredients = new ArrayList<>();
     private Float energie100g;
     private Float graisse100g;
@@ -55,9 +59,9 @@ public class Produit {
     private Float fer100g;
     private Float betaCarotene100g;
     private Boolean presenceHuilePalme;
-    @OneToMany
+    @ManyToMany
     private List<Allergene> listeAllergenes = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     private List<Additif> listeAdditifs = new ArrayList<>();
 
     /**
@@ -76,20 +80,12 @@ public class Produit {
         this.id = id;
     }
 
-    /**
-     *
-     * @return
-     */
-    public Marque getMarque() {
-        return marque;
+    public List<Marque> getMarques() {
+        return marques;
     }
 
-    /**
-     *
-     * @param marque
-     */
-    public void setMarque(Marque marque) {
-        this.marque = marque;
+    public void setMarques(List<Marque> marques) {
+        this.marques = marques;
     }
 
     /**
@@ -558,7 +554,7 @@ public class Produit {
 
     @Override
     public String toString() {
-        return "Produit{" + "id=" + id + ", marque=" + marque + ", categorie=" + categorie + ", nom=" + nom + ", score=" + score + ", listeIngredients=" + listeIngredients + ", energie100g=" + energie100g + ", graisse100g=" + graisse100g + ", sucres100g=" + sucres100g + ", fibres100g=" + fibres100g + ", proteines100g=" + proteines100g + ", sel100g=" + sel100g + ", vitA100g=" + vitA100g + ", vitD100g=" + vitD100g + ", vitE100g=" + vitE100g + ", vitK100g=" + vitK100g + ", vitC100g=" + vitC100g + ", vitB1100g=" + vitB1100g + ", vitB2100g=" + vitB2100g + ", vitPP100g=" + vitPP100g + ", vitB6100g=" + vitB6100g + ", vitB9100g=" + vitB9100g + ", vitB12100g=" + vitB12100g + ", calcium100g=" + calcium100g + ", magnesium100g=" + magnesium100g + ", iron100g=" + iron100g + ", fer100g=" + fer100g + ", betaCarotene100g=" + betaCarotene100g + ", presenceHuilePalme=" + presenceHuilePalme + ", listeAllergenes=" + listeAllergenes + ", listeAdditifs=" + listeAdditifs + '}';
+        return "Produit{" + "id=" + id + ", marques=" + marques + ", categorie=" + categorie + ", nom=" + nom + ", score=" + score + ", listeIngredients=" + listeIngredients + ", energie100g=" + energie100g + ", graisse100g=" + graisse100g + ", sucres100g=" + sucres100g + ", fibres100g=" + fibres100g + ", proteines100g=" + proteines100g + ", sel100g=" + sel100g + ", vitA100g=" + vitA100g + ", vitD100g=" + vitD100g + ", vitE100g=" + vitE100g + ", vitK100g=" + vitK100g + ", vitC100g=" + vitC100g + ", vitB1100g=" + vitB1100g + ", vitB2100g=" + vitB2100g + ", vitPP100g=" + vitPP100g + ", vitB6100g=" + vitB6100g + ", vitB9100g=" + vitB9100g + ", vitB12100g=" + vitB12100g + ", calcium100g=" + calcium100g + ", magnesium100g=" + magnesium100g + ", iron100g=" + iron100g + ", fer100g=" + fer100g + ", betaCarotene100g=" + betaCarotene100g + ", presenceHuilePalme=" + presenceHuilePalme + ", listeAllergenes=" + listeAllergenes + ", listeAdditifs=" + listeAdditifs + '}';
     }
    
 }

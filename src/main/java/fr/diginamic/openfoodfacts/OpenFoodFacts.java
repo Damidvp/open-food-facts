@@ -4,6 +4,8 @@
 
 package fr.diginamic.openfoodfacts;
 
+import fr.diginamic.openfoodfacts.controller.MainController;
+
 /**
  *
  * @author dmouchagues
@@ -11,6 +13,6 @@ package fr.diginamic.openfoodfacts;
 public class OpenFoodFacts {
 
     public static void main(String[] args) {
-        
+        MainController.getInstance().insertData();
     }
 }
