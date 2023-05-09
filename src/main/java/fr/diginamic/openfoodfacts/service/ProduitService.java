@@ -20,7 +20,7 @@ public class ProduitService implements IService<Produit> {
     
     /**
      *
-     * @return
+     * @return the instance of ProduitService
      */
     public static ProduitService getInstance(){
         return INSTANCE;

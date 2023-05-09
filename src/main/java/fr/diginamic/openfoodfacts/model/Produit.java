@@ -29,7 +29,7 @@ public class Produit {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToMany
-    private List<Marque> marques;
+    private List<Marque> marques = new ArrayList<>();
     @ManyToOne
     private Categorie categorie;
     private String nom;

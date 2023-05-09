@@ -37,7 +37,7 @@ public class AllergeneService implements IService<Allergene> {
         try{
             allergene = allergeneDao.get(id);
         } catch(Exception e){
-            System.out.println("Allergene inexistant");
+            //System.out.println("Allergene inexistant");
         }
         return allergene;
     }
@@ -52,7 +52,7 @@ public class AllergeneService implements IService<Allergene> {
         try{
             allergene = allergeneDao.getByName(name);
         } catch(Exception e){
-            System.out.println("Allergene inexistant");
+            //System.out.println("Allergene inexistant");
         }
         return allergene;
     }

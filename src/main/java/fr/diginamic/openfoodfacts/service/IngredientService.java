@@ -38,7 +38,7 @@ public class IngredientService implements IService<Ingredient> {
         try{
             ingredient = ingredientDao.get(id);
         } catch(Exception e){
-            System.out.println("Ingrédient inexistant");
+            //System.out.println("Ingrédient inexistant");
         }
         return ingredient;
     }
@@ -53,7 +53,7 @@ public class IngredientService implements IService<Ingredient> {
         try{
             ingredient = ingredientDao.getByName(name);
         } catch(Exception e){
-            System.out.println("Ingrédient inexistant");
+            //System.out.println("Ingrédient inexistant");
         }
         return ingredient;
     }

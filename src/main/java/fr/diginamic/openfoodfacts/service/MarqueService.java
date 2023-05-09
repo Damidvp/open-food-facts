@@ -38,7 +38,7 @@ public class MarqueService implements IService<Marque> {
         try{
             marque = marqueDao.get(id);
         } catch(Exception e){
-            System.out.println("Marque inexistante");
+            //System.out.println("Marque inexistante");
         }
         return marque;
     }
@@ -53,7 +53,7 @@ public class MarqueService implements IService<Marque> {
         try{
             marque = marqueDao.getByName(name);
         } catch(Exception e){
-            System.out.println("Marque inexistante");
+            //System.out.println("Marque inexistante");
         }
         return marque;
     }

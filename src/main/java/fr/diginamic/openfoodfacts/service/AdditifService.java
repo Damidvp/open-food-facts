@@ -37,7 +37,7 @@ public class AdditifService implements IService<Additif>{
         try{
             additif = additifDao.get(id);
         } catch(Exception e){
-            System.out.println("Additif inexistant");
+            //System.out.println("Additif inexistant");
         }
         return additif;
     }
@@ -52,7 +52,7 @@ public class AdditifService implements IService<Additif>{
         try{
             additif = additifDao.getByName(name);
         } catch(Exception e){
-            System.out.println("Additif inexistant");
+            //System.out.println("Additif inexistant");
         }
         return additif;
     }

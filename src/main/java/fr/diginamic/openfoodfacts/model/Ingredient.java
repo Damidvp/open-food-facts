@@ -63,4 +63,13 @@ public class Ingredient {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public List<Produit> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+    
 }

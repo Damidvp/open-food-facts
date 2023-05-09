@@ -10,7 +10,7 @@ import fr.diginamic.openfoodfacts.model.Categorie;
 import fr.diginamic.openfoodfacts.model.Ingredient;
 import fr.diginamic.openfoodfacts.model.Marque;
 import fr.diginamic.openfoodfacts.model.Produit;
-import fr.diginamic.openfoodfacts.model.Stock;
+import fr.diginamic.openfoodfacts.service.Stock;
 import fr.diginamic.openfoodfacts.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

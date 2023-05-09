@@ -38,7 +38,7 @@ public class CategorieService implements IService<Categorie>{
         try{
             categorie = categorieDao.get(id);
         } catch(Exception e){
-            System.out.println("Catégorie inexistante");
+            //System.out.println("Catégorie inexistante");
         }
         return categorie;
     }
@@ -53,7 +53,7 @@ public class CategorieService implements IService<Categorie>{
         try{
             categorie = categorieDao.getByName(name);
         } catch(Exception e){
-            System.out.println("Catégorie inexistante");
+            //System.out.println("Catégorie inexistante");
         }
         return categorie;
     }

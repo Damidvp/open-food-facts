@@ -2,8 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fr.diginamic.openfoodfacts.model;
+package fr.diginamic.openfoodfacts.service;
 
+import fr.diginamic.openfoodfacts.model.Additif;
+import fr.diginamic.openfoodfacts.model.Allergene;
+import fr.diginamic.openfoodfacts.model.Categorie;
+import fr.diginamic.openfoodfacts.model.Ingredient;
+import fr.diginamic.openfoodfacts.model.Marque;
+import fr.diginamic.openfoodfacts.model.Produit;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,6 +20,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.ehcache.config.builders.CacheConfigurationBuilder;
+import org.ehcache.config.builders.CacheManagerBuilder;
+import org.ehcache.config.builders.ResourcePoolsBuilder;
 
 /**
  *
@@ -23,11 +34,20 @@ import java.util.logging.Logger;
 public class Stock {
     private final static Stock INSTANCE = new Stock();
     private List<Produit> produits = new ArrayList<>();
+    /*
+    private final static CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
+            .withCache("cacheProduits", 
+            CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Produit.class, ResourcePoolsBuilder.heap(2000))
+            .build())
+            .build(true);
+    private Cache cacheProduits = cacheManager.createCache("cacheProduits", 
+            CacheConfigurationBuilder.newCacheConfigurationBuilder(Long.class, Produit.class, ResourcePoolsBuilder.heap(2000)).build());
+    */
     
     private Stock(){
         try {
             List<String> linesFile = new ArrayList<>();
-            Path pathFile = Paths.get("c:/dev-java/open-food-facts.csv"); //Chemin du fichier CSV
+            Path pathFile = Paths.get("target/open-food-facts.csv"); //Chemin du fichier CSV
             linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
             
             //HashSet permettant de stocker les noms des entités de manière unique
@@ -39,11 +59,16 @@ public class Stock {
             
             for(String line : linesFile){
                 if(linesFile.indexOf(line) > 0){
-                    Produit produit = new Produit();
                     String[] tokens = line.split("\\|");
+                    if(tokens.length < 30){
+                        continue;
+                    }
+                    Produit produit = new Produit();
+                    
+                    produit.setId(produit.getId());
                     
                     Categorie categorie = new Categorie();
-                    categorie.setNom(tokens[0]);
+                    categorie.setNom(deleteQuotes(tokens[0]));
                     produit.setCategorie(categorie);
                     
                     produit.setNom(tokens[2]);
@@ -91,16 +116,18 @@ public class Stock {
                     
                     for(String uneMarque : tokensMarques){
                         Marque marque = new Marque();
-                        String nom = formatStr(uneMarque);
+                        String nom = uneMarque;
                         marque.setNom(nom);
                         marques.add(marque);
                     }
                     for(String unIngredient : tokensIngredients){
                         if(!unIngredient.equals("")){
                             Ingredient ingredient = new Ingredient();
-                            String nom = formatStr(unIngredient);
+                            String nom = deleteUnderscoreAndStars(unIngredient);
+                            nom = deleteSpaces(nom);
+                            nom = deleteDetails(nom);
                             ingredient.setNom(nom);
-                            if(nomsIngredients.add(ingredient.getNom().toLowerCase())){
+                            if(nomsIngredients.add(ingredient.getNom().toLowerCase()) && !nom.equals("")){
                                 ingredients.add(ingredient);
                             }
                         }
@@ -108,9 +135,10 @@ public class Stock {
                     for(String unAllergene : tokensAllergenes){
                         if(!unAllergene.equals("")){
                             Allergene allergene = new Allergene();
-                            String nom = formatStr(unAllergene);
+                            String nom = deleteSpaces(unAllergene);
+                            nom = deleteUnderscoreAndStars(nom);
                             allergene.setNom(nom);
-                            if(nomsAllergenes.add(allergene.getNom().toLowerCase())){
+                            if(nomsAllergenes.add(allergene.getNom().toLowerCase()) && !nom.equals("")){
                                 allergenes.add(allergene);
                             }
                         }
@@ -118,9 +146,9 @@ public class Stock {
                     for(String unAdditif : tokensAdditifs){
                         if(!unAdditif.equals("")){
                             Additif additif = new Additif();
-                            String nom = formatStr(unAdditif);
+                            String nom = deleteSpaces(unAdditif);
                             additif.setNom(nom);
-                            if(nomsAdditifs.add(additif.getNom().toLowerCase())){
+                            if(nomsAdditifs.add(additif.getNom().toLowerCase()) && !nom.equals("")){
                                 additifs.add(additif);
                             }
                         }
@@ -177,23 +205,68 @@ public class Stock {
     }
     
     /**
-     * @return Formatted and correct String for names of Ingredient, Addifif and Allergene
+     * @return Formatted and correct String for names
      */
-    private String formatStr(String s){
+    /*private String formatStr(String s){
         String chaineFormat = "";
         if(!s.equals("")){
-            chaineFormat = s.replaceAll("\\*", "")
-                .replaceAll("_", "")
-                .replaceAll("\\.", "")
-                .replaceAll("\\(.*?\\)", "")
-                .replaceAll("\\[.*?\\]", "")
-                .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "")
-                .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", "");
+            chaineFormat = s.replaceAll("\\*", "") //Supprime *
+                .replaceAll("_", "") //Supprime _
+                .replaceAll("\\.", "") //Supprime .
+                .replaceAll("\\(.*?\\)", "") //Supprime (entre parenthèses)
+                .replaceAll("\\[.*?\\]", "") //Supprime [entre crochets]
+                .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "") //Supprime pourcentage sans espace
+                .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", ""); //Supprime pourcentage avec espace
+            //Supprime premier caractère si vide ou "
             if(chaineFormat.length() > 0){
-                if(chaineFormat.charAt(0) == ' '){
-                    chaineFormat = chaineFormat.replaceFirst(" ", "");
+                if((chaineFormat.charAt(0) == ' ') || chaineFormat.charAt(0) == '"'){
+                    chaineFormat = chaineFormat.replaceFirst(" |\"", "");
                 }
             }
+        }
+        return chaineFormat;
+    }*/
+    
+    private String deleteUnderscoreAndStars(String s){
+        String chaineFormat = s;
+        if(!s.equals("")){
+            chaineFormat = s.replaceAll("_", "") //Supprime _
+                    .replaceAll("\\*", ""); //Supprime *
+        }
+        return chaineFormat;
+    }
+    
+    private String deleteQuotes(String s){
+        String chaineFormat = s;
+        if(!s.equals("")){
+            if(s.length() > 0){
+                if((s.charAt(0) == '"')){
+                    chaineFormat = s.replaceFirst("\"", "");
+                }
+            }
+        }
+        return chaineFormat;
+        
+    }
+    
+    private String deleteSpaces(String s){
+        String chaineFormat = s;
+        if(s.length() > 0){
+            if((s.charAt(0) == ' ')){
+                chaineFormat = s.replaceFirst(" ", "");
+            }
+        }
+        return chaineFormat;
+    }
+    
+    private String deleteDetails(String s){
+        String chaineFormat = s;
+        if(s.length() > 0){
+            chaineFormat = s.replaceAll("\\.", "") //Supprime .
+                .replaceAll("\\(.*?\\)", "") //Supprime (entre parenthèses)
+                .replaceAll("\\[.*?\\]", "") //Supprime [entre crochets]
+                .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "") //Supprime pourcentage sans espace
+                .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", ""); //Supprime pourcentage avec espace
         }
         return chaineFormat;
     }
