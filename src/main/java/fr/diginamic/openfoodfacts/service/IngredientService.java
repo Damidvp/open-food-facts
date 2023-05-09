@@ -19,10 +19,19 @@ public class IngredientService implements IService<Ingredient> {
     
     private IngredientService(){}
     
+    /**
+     *
+     * @return
+     */
     public static IngredientService getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Ingredient get(long id) {
         Ingredient ingredient = null;
@@ -34,6 +43,11 @@ public class IngredientService implements IService<Ingredient> {
         return ingredient;
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     public Ingredient getByName(String name){
         Ingredient ingredient = null;
         try{
@@ -44,27 +58,47 @@ public class IngredientService implements IService<Ingredient> {
         return ingredient;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Ingredient> getAll() {
         List<Ingredient> liste = ingredientDao.getAll();
         return liste;
     }
 
+    /**
+     *
+     * @param ingredient
+     * @param params
+     */
     @Override
     public void update(Ingredient ingredient, String[] params) {
         ingredientDao.update(ingredient, params);
     }
 
+    /**
+     *
+     * @param ingredient
+     */
     @Override
     public void save(Ingredient ingredient) {
         ingredientDao.save(ingredient);
     }
 
+    /**
+     *
+     * @param ingredient
+     */
     @Override
     public void delete(Ingredient ingredient) {
         ingredientDao.delete(ingredient);
     }
 
+    /**
+     *
+     */
     @Override
     public void closeEM() {
         ingredientDao.closeEM();

@@ -21,21 +21,38 @@ public class ProduitDAO implements IDAO<Produit> {
     
     private ProduitDAO(){}
     
+    /**
+     *
+     * @return the instance of ProduitDAO
+     */
     public static ProduitDAO getInstance(){
         return INSTANCE;
     }
     
+    /**
+     *
+     * @param id of a Produit
+     * @return the Produit which has been found
+     */
     @Override
     public Produit get(long id) {
         return em.find(Produit.class, id);
     }
 
+    /**
+     *
+     * @return all occurences of Produit
+     */
     @Override
     public List<Produit> getAll() {
         TypedQuery<Produit> query = em.createNamedQuery("Produit.findAll", Produit.class);
         return query.getResultList();
     }
 
+    /**
+     *
+     * @param produit to save
+     */
     @Override
     public void save(Produit produit) {
         em.getTransaction().begin();
@@ -43,11 +60,20 @@ public class ProduitDAO implements IDAO<Produit> {
         em.getTransaction().commit();
     }
 
+    /**
+     *
+     * @param produit to update
+     * @param params array of fields to update
+     */
     @Override
     public void update(Produit produit, String[] params) {
         //TODO mise à jour produit
     }
 
+    /**
+     *
+     * @param produit to delete
+     */
     @Override
     public void delete(Produit produit) {
         em.getTransaction().begin();
@@ -55,6 +81,9 @@ public class ProduitDAO implements IDAO<Produit> {
         em.getTransaction().commit();
     }
 
+    /**
+     * Closes the EntityManager
+     */
     @Override
     public void closeEM() {
         em.close();

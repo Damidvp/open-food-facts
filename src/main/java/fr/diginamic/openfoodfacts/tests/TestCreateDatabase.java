@@ -34,6 +34,10 @@ public class TestCreateDatabase {
         em.close();
     }
     
+    /**
+     *
+     * @param em
+     */
     public static void createDatabase(EntityManager em){
         List<Produit> allProduits = Stock.getInstance().getProduits();
         List<Marque> marques = new ArrayList<>();
@@ -80,6 +84,12 @@ public class TestCreateDatabase {
         em.getTransaction().commit();
     }
     
+    /**
+     *
+     * @param liste
+     * @param nom
+     * @return
+     */
     public static Marque chercherMarque(List<Marque> liste, String nom){
         Marque marqueTrouvee = null;
         for(Marque m : liste){
@@ -91,6 +101,12 @@ public class TestCreateDatabase {
         return marqueTrouvee;
     }
     
+    /**
+     *
+     * @param liste
+     * @param nom
+     * @return
+     */
     public static Categorie chercherCategorie(List<Categorie> liste, String nom){
         Categorie categorieTrouvee = null;
         for(Categorie c : liste){
@@ -102,6 +118,12 @@ public class TestCreateDatabase {
         return categorieTrouvee;
     }
     
+    /**
+     *
+     * @param liste
+     * @param nom
+     * @return
+     */
     public static Ingredient chercherIngredient(List<Ingredient> liste, String nom){
         Ingredient ingredientTrouve = null;
         for(Ingredient i : liste){
@@ -113,6 +135,12 @@ public class TestCreateDatabase {
         return ingredientTrouve;
     }
     
+    /**
+     *
+     * @param liste
+     * @param nom
+     * @return
+     */
     public static Additif chercherAdditif(List<Additif> liste, String nom){
         Additif additifTrouve = null;
         for(Additif a : liste){
@@ -124,6 +152,12 @@ public class TestCreateDatabase {
         return additifTrouve;
     }
     
+    /**
+     *
+     * @param liste
+     * @param nom
+     * @return
+     */
     public static Allergene chercherAllergene(List<Allergene> liste, String nom){
         Allergene allergeneTrouve = null;
         for(Allergene a : liste){

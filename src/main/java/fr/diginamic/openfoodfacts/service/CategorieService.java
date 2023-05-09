@@ -19,10 +19,19 @@ public class CategorieService implements IService<Categorie>{
             
     private CategorieService(){}
     
+    /**
+     *
+     * @return
+     */
     public static CategorieService getInstance(){
         return INSTANCE;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Categorie get(long id) {
         Categorie categorie = null;
@@ -34,6 +43,11 @@ public class CategorieService implements IService<Categorie>{
         return categorie;
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     public Categorie getByName(String name){
         Categorie categorie = null;
         try{
@@ -44,27 +58,47 @@ public class CategorieService implements IService<Categorie>{
         return categorie;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Categorie> getAll() {
         List<Categorie> liste = categorieDao.getAll();
         return liste;
     }
 
+    /**
+     *
+     * @param categorie
+     * @param params
+     */
     @Override
     public void update(Categorie categorie, String[] params) {
         categorieDao.update(categorie, params);
     }
 
+    /**
+     *
+     * @param categorie
+     */
     @Override
     public void save(Categorie categorie) {
         categorieDao.save(categorie);
     }
 
+    /**
+     *
+     * @param categorie
+     */
     @Override
     public void delete(Categorie categorie) {
         categorieDao.delete(categorie);
     }
 
+    /**
+     *
+     */
     @Override
     public void closeEM() {
         categorieDao.closeEM();

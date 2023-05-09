@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 /**
  *
  * @author dmouchagues
- * Classe qui parse le fichier CSV, tout en créant une liste de tous les produits
+ * Classe qui parse le fichier CSV, tout en créant une liste de tous les produits prêts à être insérés en base
  */
 public class Stock {
     private final static Stock INSTANCE = new Stock();
@@ -164,7 +164,7 @@ public class Stock {
     }
     
     /**
-     * @return Float value of String. Return 0 if can't parse
+     * @return Float value of String. Return 0 if the String cannot be parsed
      */
     private Float getValueOf(String token){
         Float result = 0F;
@@ -176,6 +176,9 @@ public class Stock {
         return result;
     }
     
+    /**
+     * @return Formatted and correct String for names of Ingredient, Addifif and Allergene
+     */
     private String formatStr(String s){
         String chaineFormat = "";
         if(!s.equals("")){

@@ -23,7 +23,7 @@ public class MarqueDAO implements IDAO<Marque>{
     
     /**
      *
-     * @return
+     * @return the instance of MarqueDAO
      */
     public static MarqueDAO getInstance(){
         return INSTANCE;
@@ -31,8 +31,8 @@ public class MarqueDAO implements IDAO<Marque>{
     
     /**
      *
-     * @param id
-     * @return
+     * @param id of a Marque
+     * @return the Marque which has been found
      */
     @Override
     public Marque get(long id) {
@@ -41,8 +41,8 @@ public class MarqueDAO implements IDAO<Marque>{
     
     /**
      *
-     * @param name
-     * @return
+     * @param name of a Marque
+     * @return the Marque which has been found
      */
     public Marque getByName(String name){
         TypedQuery<Marque> query = em.createNamedQuery("Marque.findByName", Marque.class);
@@ -52,7 +52,7 @@ public class MarqueDAO implements IDAO<Marque>{
 
     /**
      *
-     * @return
+     * @return all occurences of Marque
      */
     @Override
     public List<Marque> getAll() {
@@ -62,7 +62,7 @@ public class MarqueDAO implements IDAO<Marque>{
 
     /**
      *
-     * @param marque
+     * @param marque to save
      */
     @Override
     public void save(Marque marque) {
@@ -73,8 +73,8 @@ public class MarqueDAO implements IDAO<Marque>{
 
     /**
      *
-     * @param marque
-     * @param params
+     * @param marque to update
+     * @param params array of fields to update
      */
     @Override
     public void update(Marque marque, String[] params) {
@@ -86,7 +86,7 @@ public class MarqueDAO implements IDAO<Marque>{
 
     /**
      *
-     * @param marque
+     * @param marque to delete
      */
     @Override
     public void delete(Marque marque) {
@@ -96,7 +96,7 @@ public class MarqueDAO implements IDAO<Marque>{
     }
 
     /**
-     *
+     * Closes the EntityManager
      */
     @Override
     public void closeEM() {

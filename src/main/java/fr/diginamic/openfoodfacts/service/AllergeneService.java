@@ -18,10 +18,19 @@ public class AllergeneService implements IService<Allergene> {
     
     private AllergeneService(){}
     
+    /**
+     *
+     * @return
+     */
     public static AllergeneService getInstance(){
         return INSTANCE;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Allergene get(long id) {
         Allergene allergene = null;
@@ -33,6 +42,11 @@ public class AllergeneService implements IService<Allergene> {
         return allergene;
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     public Allergene getByName(String name){
         Allergene allergene = null;
         try{
@@ -43,27 +57,47 @@ public class AllergeneService implements IService<Allergene> {
         return allergene;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Allergene> getAll() {
         List<Allergene> liste = allergeneDao.getAll();
         return liste;
     }
 
+    /**
+     *
+     * @param allergene
+     * @param params
+     */
     @Override
     public void update(Allergene allergene, String[] params) {
         allergeneDao.update(allergene, params);
     }
 
+    /**
+     *
+     * @param allergene
+     */
     @Override
     public void save(Allergene allergene) {
         allergeneDao.save(allergene);
     }
 
+    /**
+     *
+     * @param allergene
+     */
     @Override
     public void delete(Allergene allergene) {
         allergeneDao.delete(allergene);
     }
 
+    /**
+     *
+     */
     @Override
     public void closeEM() {
         allergeneDao.closeEM();
