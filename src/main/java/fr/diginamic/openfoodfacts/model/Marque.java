@@ -25,7 +25,7 @@ import java.util.List;
 @Table(indexes = {@Index(columnList = "nom")})
 @NamedQueries({
     @NamedQuery(name = "Marque.findAll", query = "SELECT m FROM Marque m"),
-    @NamedQuery(name = "Marque.findByName", query = "SELECT m FROM Marque m WHERE nom = :nom")
+    @NamedQuery(name = "Marque.findByName", query = "SELECT m FROM Marque m WHERE nom LIKE :nom")
 })
 public class Marque {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

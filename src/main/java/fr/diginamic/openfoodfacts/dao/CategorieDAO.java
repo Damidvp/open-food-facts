@@ -46,7 +46,7 @@ public class CategorieDAO implements IDAO<Categorie>{
      */
     public Categorie getByName(String name){
         TypedQuery<Categorie> query = em.createNamedQuery("Categorie.findByName", Categorie.class);
-        query.setParameter("nom", name);
+        query.setParameter("nom", "%"+name+"%");
         if(!query.getResultList().isEmpty()){
             return query.getResultList().get(0);
         } else {

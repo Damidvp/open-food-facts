@@ -46,7 +46,7 @@ public class IngredientDAO implements IDAO<Ingredient>{
      */
     public Ingredient getByName(String name){
         TypedQuery<Ingredient> query = em.createNamedQuery("Ingredient.findByName", Ingredient.class);
-        query.setParameter("nom", name);
+        query.setParameter("nom", "%"+name+"%");
         if(!query.getResultList().isEmpty()){
             return query.getResultList().get(0);
         } else {

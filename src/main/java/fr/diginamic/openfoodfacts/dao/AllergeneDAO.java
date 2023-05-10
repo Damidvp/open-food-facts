@@ -46,7 +46,7 @@ public class AllergeneDAO implements IDAO<Allergene> {
      */
     public Allergene getByName(String name){
         TypedQuery<Allergene> query = em.createNamedQuery("Allergene.findByName", Allergene.class);
-        query.setParameter("nom", name);
+        query.setParameter("nom", "%"+name+"%");
         if(!query.getResultList().isEmpty()){
             return query.getResultList().get(0);
         } else {
