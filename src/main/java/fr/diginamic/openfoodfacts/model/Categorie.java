@@ -9,9 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  * @author dmouchagues
  */
 @Entity
+@Table(indexes = {@Index(columnList = "nom")})
 @NamedQueries({
     @NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c"),
     @NamedQuery(name = "Categorie.findByName", query = "SELECT c FROM Categorie c WHERE nom = :nom")

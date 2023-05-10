@@ -47,7 +47,11 @@ public class AdditifDAO implements IDAO<Additif> {
     public Additif getByName(String name){
         TypedQuery<Additif> query = em.createNamedQuery("Additif.findByName", Additif.class);
         query.setParameter("nom", name);
-        return query.getResultList().get(0);
+        if(!query.getResultList().isEmpty()){
+            return query.getResultList().get(0);
+        } else {
+            return null;
+        }
     }
 
     /**

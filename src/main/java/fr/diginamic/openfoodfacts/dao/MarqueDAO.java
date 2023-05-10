@@ -47,7 +47,11 @@ public class MarqueDAO implements IDAO<Marque>{
     public Marque getByName(String name){
         TypedQuery<Marque> query = em.createNamedQuery("Marque.findByName", Marque.class);
         query.setParameter("nom", name);
-        return query.getResultList().get(0);
+        if(!query.getResultList().isEmpty()){
+            return query.getResultList().get(0);
+        } else {
+            return null;
+        }
     }
 
     /**

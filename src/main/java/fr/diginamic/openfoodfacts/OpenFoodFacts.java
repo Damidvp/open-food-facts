@@ -4,7 +4,7 @@
 
 package fr.diginamic.openfoodfacts;
 
-import fr.diginamic.openfoodfacts.controller.MainController;
+import fr.diginamic.openfoodfacts.service.StockService;
 
 /**
  *
@@ -17,6 +17,6 @@ public class OpenFoodFacts {
      * @param args
      */
     public static void main(String[] args) {
-        MainController.getInstance().insertData();
+        StockService.getInstance();
     }
 }

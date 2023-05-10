@@ -8,10 +8,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,7 @@ import java.util.List;
  * @author dmouchagues
  */
 @Entity
+@Table(indexes = {@Index(columnList = "nom")})
 @NamedQueries({
     @NamedQuery(name = "Marque.findAll", query = "SELECT m FROM Marque m"),
     @NamedQuery(name = "Marque.findByName", query = "SELECT m FROM Marque m WHERE nom = :nom")
