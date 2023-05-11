@@ -4,9 +4,6 @@
  */
 package fr.diginamic.openfoodfacts.views;
 
-import fr.diginamic.openfoodfacts.dao.MarqueDAO;
-import fr.diginamic.openfoodfacts.model.Marque;
-import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
 /**

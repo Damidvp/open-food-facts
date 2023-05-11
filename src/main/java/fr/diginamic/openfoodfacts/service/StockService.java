@@ -22,11 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,9 +43,8 @@ public class StockService {
 
     private StockService() {
         try {
-            List<String> linesFile = new ArrayList<>();
             Path pathFile = Paths.get("target/open-food-facts.csv"); //Chemin du fichier CSV
-            linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
+            List<String> linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
 
             for (int i = 1; i < linesFile.size(); i++) {
                 String[] tokens = linesFile.get(i).split("\\|");
@@ -114,13 +109,16 @@ public class StockService {
      */
     private String cleanIngredientName(String s) {
         if (s.length() > 0) {
-            s = s.replaceAll("_", "") //Supprime _
-                    .replaceAll("\\*", "") //Supprime *
-                    .replaceAll("\\.", "") //Supprime .
+            s = s.replace("_", "") //Supprime _
+                    .replace("*", "") //Supprime *
+                    .replace(".", "") //Supprime .
                     .replaceAll("\\(.*?\\)", "") //Supprime (entre parenthèses)
                     .replaceAll("\\[.*?\\]", "") //Supprime [entre crochets]
                     .replaceAll("\\s*\\d+(\\.\\d+)?%\\s*", "") //Supprime pourcentage sans espace
                     .replaceAll("\\s*\\d+(\\.\\d+)? %\\s*", "") //Supprime pourcentage avec espace
+                    .replaceAll("\\s*\\d+(\\.\\d+)? g\\s*", "") //Supprime les grammes
+                    .replaceAll("[()\\[\\]{}]", "") //Supprime parenthèses seules
+                    .replace("FR", "") //Suprimme "FR"
                     .trim();
         }
         return s;
@@ -152,7 +150,7 @@ public class StockService {
      * Saves the Categorie of a Produit in database
      */
     private void saveCategorie(String[] tokens, Produit produit) {
-        Categorie categorieExistante = categorieDao.getByName(tokens[0]);
+        Categorie categorieExistante = categorieDao.getByName(cleanCategorieName(tokens[0]));
         if (categorieExistante != null) {
             produit.setCategorie(categorieExistante);
         } else {
@@ -206,7 +204,7 @@ public class StockService {
         List<Additif> additifs = new ArrayList<>();
 
         String[] tokensMarques = tokens[1].split(",");
-        String[] tokensIngredients = tokens[4].split(",|;");
+        String[] tokensIngredients = tokens[4].split(",|;| - ");
         String[] tokensAllergenes = tokens[28].split(",|;");
         String[] tokensAdditifs = tokens[29].split(",|;");
 
@@ -223,7 +221,7 @@ public class StockService {
             }
         }
         for (String unIngredient : tokensIngredients) {
-            if (!unIngredient.equals("")) {
+            if (unIngredient.length() > 0) {
                 unIngredient = cleanIngredientName(unIngredient);
                 Ingredient ingredientExistant = ingredientDao.getByName(unIngredient);
                 if (ingredientExistant != null) {
@@ -237,7 +235,7 @@ public class StockService {
             }
         }
         for (String unAllergene : tokensAllergenes) {
-            if (!unAllergene.equals("")) {
+            if (unAllergene.length() > 0) {
                 unAllergene = cleanAllergeneName(unAllergene);
                 Allergene allergeneExistant = allergeneDao.getByName(unAllergene);
                 if (allergeneExistant != null) {
@@ -251,7 +249,7 @@ public class StockService {
             }
         }
         for (String unAdditif : tokensAdditifs) {
-            if (!unAdditif.equals("")) {
+            if (unAdditif.length() > 0) {
                 unAdditif = cleanAdditifName(unAdditif);
                 Additif additifExistant = additifDao.getByName(unAdditif);
                 if (additifExistant != null) {

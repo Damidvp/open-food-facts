@@ -7,6 +7,7 @@ package fr.diginamic.openfoodfacts.dao;
 import fr.diginamic.openfoodfacts.model.Allergene;
 import fr.diginamic.openfoodfacts.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class AllergeneDAO implements IDAO<Allergene> {
     
     private final static AllergeneDAO INSTANCE = new AllergeneDAO();
-    private EntityManager em = JPAUtils.getInstance().getEntityManager();
+    private final EntityManager em = JPAUtils.getInstance().getEntityManager();
     
     private AllergeneDAO(){}
     
@@ -46,10 +47,10 @@ public class AllergeneDAO implements IDAO<Allergene> {
      */
     public Allergene getByName(String name){
         TypedQuery<Allergene> query = em.createNamedQuery("Allergene.findByName", Allergene.class);
-        query.setParameter("nom", "%"+name+"%");
-        if(!query.getResultList().isEmpty()){
-            return query.getResultList().get(0);
-        } else {
+        query.setParameter("nom", name);
+        try{
+            return query.getSingleResult();
+        } catch(NoResultException e){
             return null;
         }
     }

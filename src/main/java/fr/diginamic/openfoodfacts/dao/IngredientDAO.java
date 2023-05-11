@@ -7,6 +7,7 @@ package fr.diginamic.openfoodfacts.dao;
 import fr.diginamic.openfoodfacts.model.Ingredient;
 import fr.diginamic.openfoodfacts.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class IngredientDAO implements IDAO<Ingredient>{
 
     private final static IngredientDAO INSTANCE = new IngredientDAO();
-    private EntityManager em = JPAUtils.getInstance().getEntityManager();
+    private final EntityManager em = JPAUtils.getInstance().getEntityManager();
     
     private IngredientDAO(){}
     
@@ -46,10 +47,10 @@ public class IngredientDAO implements IDAO<Ingredient>{
      */
     public Ingredient getByName(String name){
         TypedQuery<Ingredient> query = em.createNamedQuery("Ingredient.findByName", Ingredient.class);
-        query.setParameter("nom", "%"+name+"%");
-        if(!query.getResultList().isEmpty()){
-            return query.getResultList().get(0);
-        } else {
+        query.setParameter("nom", name);
+        try{
+            return query.getSingleResult();
+        } catch(NoResultException e){
             return null;
         }
     }

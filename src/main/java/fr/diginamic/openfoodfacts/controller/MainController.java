@@ -17,8 +17,6 @@ import fr.diginamic.openfoodfacts.views.ModelProduits;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -27,15 +25,14 @@ import javax.swing.table.TableModel;
 public class MainController {
     
     private final static MainController INSTANCE = new MainController();
-    private static ProduitDAO produitDao = ProduitDAO.getInstance();
-    private static CategorieDAO categorieDao = CategorieDAO.getInstance();
-    private static MarqueDAO marqueDao = MarqueDAO.getInstance();
+    private final static ProduitDAO produitDao = ProduitDAO.getInstance();
+    private final static CategorieDAO categorieDao = CategorieDAO.getInstance();
+    private final static MarqueDAO marqueDao = MarqueDAO.getInstance();
     
-    private static List<Categorie> allCategories = categorieDao.getAll();
-    private static List<Marque> allMarques = marqueDao.getAll();
+    private final static List<Categorie> allCategories = categorieDao.getAll();
+    private final static List<Marque> allMarques = marqueDao.getAll();
     
-    private static String[] columns = {"ID", "Marques", "Catégorie", "Name", "Score"};
-    private static Object data[][];
+    private final static String[] columns = {"ID", "Marques", "Catégorie", "Name", "Score"};
     
     private MainController(){}
     

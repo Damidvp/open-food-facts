@@ -17,7 +17,7 @@ import java.util.List;
 public class ProduitDAO implements IDAO<Produit> {
 
     private final static ProduitDAO INSTANCE = new ProduitDAO();
-    private EntityManager em = JPAUtils.getInstance().getEntityManager();
+    private final EntityManager em = JPAUtils.getInstance().getEntityManager();
     
     private ProduitDAO(){}
     

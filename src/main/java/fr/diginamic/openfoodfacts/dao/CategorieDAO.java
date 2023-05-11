@@ -7,6 +7,7 @@ package fr.diginamic.openfoodfacts.dao;
 import fr.diginamic.openfoodfacts.model.Categorie;
 import fr.diginamic.openfoodfacts.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class CategorieDAO implements IDAO<Categorie>{
     
     private final static CategorieDAO INSTANCE = new CategorieDAO();
-    private EntityManager em = JPAUtils.getInstance().getEntityManager();
+    private final EntityManager em = JPAUtils.getInstance().getEntityManager();
     
     private CategorieDAO(){}
     
@@ -46,10 +47,10 @@ public class CategorieDAO implements IDAO<Categorie>{
      */
     public Categorie getByName(String name){
         TypedQuery<Categorie> query = em.createNamedQuery("Categorie.findByName", Categorie.class);
-        query.setParameter("nom", "%"+name+"%");
-        if(!query.getResultList().isEmpty()){
-            return query.getResultList().get(0);
-        } else {
+        query.setParameter("nom", name);
+        try{
+            return query.getSingleResult();
+        } catch(NoResultException e){
             return null;
         }
     }

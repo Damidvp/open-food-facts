@@ -4,13 +4,6 @@
  */
 package fr.diginamic.openfoodfacts.views;
 
-import fr.diginamic.openfoodfacts.dao.ProduitDAO;
-import fr.diginamic.openfoodfacts.model.Marque;
-import fr.diginamic.openfoodfacts.model.Produit;
-import fr.diginamic.openfoodfacts.utils.ComparatorScore;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -19,14 +12,13 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModelProduits extends AbstractTableModel{
     
-    private ProduitDAO produitDao = ProduitDAO.getInstance();
-    private String[] columns;
-    private Object data[][];
+    private final String[] columns;
+    private final Object data[][];
     
     /**
      *
-     * @param rechCategorie selected in JComboBox
-     * @param rechMarque selected in JComboBox
+     * @param columns of Model
+     * @param data of Model
      */
     public ModelProduits(String[] columns, Object[][] data){
         super();
