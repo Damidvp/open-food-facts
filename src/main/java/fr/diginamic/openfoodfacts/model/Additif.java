@@ -37,7 +37,7 @@ public class Additif {
 
     /**
      *
-     * @return
+     * @return l'id d'un Additif
      */
     public Long getId() {
         return id;
@@ -45,7 +45,7 @@ public class Additif {
 
     /**
      *
-     * @param id
+     * @param id d'un Additif
      */
     public void setId(Long id) {
         this.id = id;
@@ -53,7 +53,7 @@ public class Additif {
 
     /**
      *
-     * @return
+     * @return le nom d'un Additif
      */
     public String getNom() {
         return nom;
@@ -61,16 +61,24 @@ public class Additif {
 
     /**
      *
-     * @param nom
+     * @param nom d'un Additif
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return la liste de Produit d'un Additif
+     */
     public List<Produit> getProduits() {
         return produits;
     }
 
+    /**
+     *
+     * @param produits d'un Additif
+     */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }

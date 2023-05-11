@@ -91,11 +91,17 @@ public class StockService {
         }
     }
 
+    /**
+     * Cleans name of a Marque before insertion
+     */
     private String cleanMarqueName(String s) {
         s = s.trim();
         return s;
     }
-
+    
+    /**
+     * Cleans name of a Categorie before insertion
+     */
     private String cleanCategorieName(String s) {
         if (s.length() > 0) {
             s = s.replaceAll("\"", "");
@@ -103,6 +109,9 @@ public class StockService {
         return s;
     }
 
+    /**
+     * Cleans name of an Ingredient before insertion
+     */
     private String cleanIngredientName(String s) {
         if (s.length() > 0) {
             s = s.replaceAll("_", "") //Supprime _
@@ -116,7 +125,10 @@ public class StockService {
         }
         return s;
     }
-
+    
+    /**
+     * Cleans name of an Allergene before insertion
+     */
     private String cleanAllergeneName(String s) {
         if (s.length() > 0) {
             s = s.replaceAll("_", "") //Supprime _
@@ -127,12 +139,18 @@ public class StockService {
         }
         return s;
     }
-
+    
+    /**
+     * Cleans name of an Additif before insertion
+     */
     private String cleanAdditifName(String s) {
         s = s.trim();
         return s;
     }
-
+    
+    /**
+     * Saves the Categorie of a Produit in database
+     */
     private void saveCategorie(String[] tokens, Produit produit) {
         Categorie categorieExistante = categorieDao.getByName(tokens[0]);
         if (categorieExistante != null) {
@@ -145,6 +163,9 @@ public class StockService {
         }
     }
 
+    /**
+     * Saves other information about a Produit in database
+     */
     private void saveInfo(String[] tokens, Produit produit) {
         produit.setNom(tokens[2]);
         produit.setScore(tokens[3].charAt(0));
@@ -175,6 +196,9 @@ public class StockService {
         produit.setPresenceHuilePalme(Boolean.valueOf(tokens[27]));
     }
 
+    /**
+     * Saves all lists of a Produit in database
+     */
     private void saveLists(String[] tokens, Produit produit) {
         List<Marque> marques = new ArrayList<>();
         List<Ingredient> ingredients = new ArrayList<>();

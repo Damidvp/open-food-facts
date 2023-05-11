@@ -4,7 +4,6 @@
  */
 package fr.diginamic.openfoodfacts.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +13,6 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,7 @@ public class Categorie {
 
     /**
      *
-     * @return
+     * @return l'id d'une Categorie
      */
     public Long getId() {
         return id;
@@ -45,7 +43,7 @@ public class Categorie {
 
     /**
      *
-     * @param id
+     * @param id d'une Categorie
      */
     public void setId(Long id) {
         this.id = id;
@@ -53,7 +51,7 @@ public class Categorie {
 
     /**
      *
-     * @return
+     * @return le nom d'une Categorie
      */
     public String getNom() {
         return nom;
@@ -61,7 +59,7 @@ public class Categorie {
 
     /**
      *
-     * @param nom
+     * @param nom d'une Categorie
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -69,7 +67,7 @@ public class Categorie {
 
     /**
      *
-     * @return
+     * @return la liste de Produit d'une Categorie
      */
     public List<Produit> getProduits() {
         return produits;
@@ -77,7 +75,7 @@ public class Categorie {
 
     /**
      *
-     * @param produits
+     * @param produits d'une Categorie
      */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;

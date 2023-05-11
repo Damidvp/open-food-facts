@@ -11,12 +11,15 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author zdamy
+ * @author dmouchagues
  */
 public class ModelMarques extends DefaultComboBoxModel<String> {
     private MarqueDAO marqueDao = MarqueDAO.getInstance();
     private List<Marque> allMarques = marqueDao.getAll();
     
+    /**
+     * Create a model for JComboBox of Marque
+     */
     public ModelMarques(){
         this.addElement("***");
         for(Marque marque : allMarques){

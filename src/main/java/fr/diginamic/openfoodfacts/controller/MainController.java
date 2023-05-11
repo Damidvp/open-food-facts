@@ -21,20 +21,12 @@ public class MainController {
     
     private MainController(){}
     
+    /**
+     *
+     * @return instance of MainController
+     */
     public static MainController getInstance(){
         return INSTANCE;
-    }
-    
-    public TableModel getModelFromListOfProduit(){
-        String[] columns = {"ID", "Name", "Score"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
-        
-        List<Produit> allProduits = produitDao.getAll();
-        for(Produit produit : allProduits){
-            model.addRow(new Object[]{produit.getId(), produit.getNom(), produit.getScore()});
-        }
-        produitDao.closeEM();
-        return model;
     }
     
 }

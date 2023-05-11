@@ -23,6 +23,11 @@ public class ModelProduits extends AbstractTableModel{
     private String[] columns = {"ID", "Marques", "Catégorie", "Name", "Score"};
     private Object data[][];
     
+    /**
+     *
+     * @param rechCategorie selected in JComboBox
+     * @param rechMarque selected in JComboBox
+     */
     public ModelProduits(String rechCategorie, String rechMarque){
         data = getData(rechCategorie, rechMarque);
     }
@@ -55,21 +60,40 @@ public class ModelProduits extends AbstractTableModel{
         return dataObject;
     }
 
+    /**
+     *
+     * @return number of rows in the model
+     */
     @Override
     public int getRowCount() {
         return data.length;
     }
 
+    /**
+     *
+     * @return number of columns in the model
+     */
     @Override
     public int getColumnCount() {
         return columns.length;
     }
 
+    /**
+     *
+     * @param rowIndex of value searched
+     * @param columnIndex of value searched
+     * @return
+     */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         return data[rowIndex][columnIndex];
     }
     
+    /**
+     *
+     * @param col index
+     * @return name of column
+     */
     @Override
     public String getColumnName(int col){
         return columns[col];

@@ -37,7 +37,7 @@ public class Allergene {
 
     /**
      *
-     * @return
+     * @return l'id d'un Allergene
      */
     public Long getId() {
         return id;
@@ -45,7 +45,7 @@ public class Allergene {
 
     /**
      *
-     * @param id
+     * @param id d'un Allergene
      */
     public void setId(Long id) {
         this.id = id;
@@ -53,7 +53,7 @@ public class Allergene {
 
     /**
      *
-     * @return
+     * @return le nom d'un Allergene
      */
     public String getNom() {
         return nom;
@@ -61,7 +61,7 @@ public class Allergene {
 
     /**
      *
-     * @param nom
+     * @param nom d'un Allergene
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -69,7 +69,7 @@ public class Allergene {
 
     /**
      *
-     * @return
+     * @return la liste de Produit d'un Allergene
      */
     public List<Produit> getProduits() {
         return produits;
@@ -77,7 +77,7 @@ public class Allergene {
 
     /**
      *
-     * @param produits
+     * @param produits d'un Allergene
      */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;

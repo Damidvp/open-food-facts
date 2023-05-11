@@ -9,10 +9,17 @@ import java.util.Comparator;
 
 /**
  *
- * @author zdamy
+ * @author dmouchagues
+ * This comparator will sort lines of JTable by score of Produit
  */
 public class ComparatorScore implements Comparator<Produit>{
 
+    /**
+     *
+     * @param o1 to compare
+     * @param o2 to compare
+     * @return result of comparison
+     */
     @Override
     public int compare(Produit o1, Produit o2) {
         int result = 0;

@@ -11,13 +11,16 @@ import javax.swing.DefaultComboBoxModel;
 
 /**
  *
- * @author zdamy
+ * @author dmouchagues
  */
 public class ModelCategories extends DefaultComboBoxModel<String> {
 
     private CategorieDAO categorieDao = CategorieDAO.getInstance();
     private List<Categorie> allCategories = categorieDao.getAll();
     
+    /**
+     * Create a new model for JComboBox of Categorie
+     */
     public ModelCategories(){
         this.addElement("***");
         for(Categorie categorie : allCategories){

@@ -66,7 +66,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return Id d'un Produit
      */
     public Long getId() {
         return id;
@@ -74,7 +74,7 @@ public class Produit {
 
     /**
      *
-     * @param id
+     * @param id d'un produit
      */
     public void setId(Long id) {
         this.id = id;
@@ -82,7 +82,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la liste de Marque d'un Produit
      */
     public List<Marque> getMarques() {
         return marques;
@@ -90,7 +90,7 @@ public class Produit {
 
     /**
      *
-     * @param marques
+     * @param marques d'un Produit
      */
     public void setMarques(List<Marque> marques) {
         this.marques = marques;
@@ -98,7 +98,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la catégorie d'un Produit
      */
     public Categorie getCategorie() {
         return categorie;
@@ -106,7 +106,7 @@ public class Produit {
 
     /**
      *
-     * @param categorie
+     * @param categorie d'un Produit
      */
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
@@ -114,7 +114,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le nom d'un Produit
      */
     public String getNom() {
         return nom;
@@ -122,7 +122,7 @@ public class Produit {
 
     /**
      *
-     * @param nom
+     * @param nom d'un Produit
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -130,7 +130,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le nutriscore d'un Produit
      */
     public Character getScore() {
         return score;
@@ -138,7 +138,7 @@ public class Produit {
 
     /**
      *
-     * @param score
+     * @param score d'un Produit
      */
     public void setScore(Character score) {
         this.score = score;
@@ -146,7 +146,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la liste des Ingredient d'un Produit
      */
     public List<Ingredient> getListeIngredients() {
         return listeIngredients;
@@ -154,7 +154,7 @@ public class Produit {
 
     /**
      *
-     * @param listeIngredients
+     * @param listeIngredients d'un Produit
      */
     public void setListeIngredients(List<Ingredient> listeIngredients) {
         this.listeIngredients = listeIngredients;
@@ -162,7 +162,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return l'énergie d'un Produit
      */
     public Float getEnergie100g() {
         return energie100g;
@@ -170,7 +170,7 @@ public class Produit {
 
     /**
      *
-     * @param energie100g
+     * @param energie100g d'un Produit
      */
     public void setEnergie100g(Float energie100g) {
         this.energie100g = energie100g;
@@ -178,7 +178,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les graisses d'un Produit
      */
     public Float getGraisse100g() {
         return graisse100g;
@@ -186,7 +186,7 @@ public class Produit {
 
     /**
      *
-     * @param graisse100g
+     * @param graisse100g d'un Produit
      */
     public void setGraisse100g(Float graisse100g) {
         this.graisse100g = graisse100g;
@@ -194,7 +194,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les sucres d'un Produit
      */
     public Float getSucres100g() {
         return sucres100g;
@@ -202,7 +202,7 @@ public class Produit {
 
     /**
      *
-     * @param sucres100g
+     * @param sucres100g d'un Produit
      */
     public void setSucres100g(Float sucres100g) {
         this.sucres100g = sucres100g;
@@ -210,7 +210,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les fibres d'un Produit
      */
     public Float getFibres100g() {
         return fibres100g;
@@ -218,7 +218,7 @@ public class Produit {
 
     /**
      *
-     * @param fibres100g
+     * @param fibres100g d'un Produit
      */
     public void setFibres100g(Float fibres100g) {
         this.fibres100g = fibres100g;
@@ -226,7 +226,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les protéines d'un Produit
      */
     public Float getProteines100g() {
         return proteines100g;
@@ -234,7 +234,7 @@ public class Produit {
 
     /**
      *
-     * @param proteines100g
+     * @param proteines100g d'un Produit
      */
     public void setProteines100g(Float proteines100g) {
         this.proteines100g = proteines100g;
@@ -242,7 +242,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les sels d'un Produit
      */
     public Float getSel100g() {
         return sel100g;
@@ -250,7 +250,7 @@ public class Produit {
 
     /**
      *
-     * @param sel100g
+     * @param sel100g d'un Produit
      */
     public void setSel100g(Float sel100g) {
         this.sel100g = sel100g;
@@ -258,7 +258,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines A d'un Produit
      */
     public Float getVitA100g() {
         return vitA100g;
@@ -266,7 +266,7 @@ public class Produit {
 
     /**
      *
-     * @param vitA100g
+     * @param vitA100g d'un Produit
      */
     public void setVitA100g(Float vitA100g) {
         this.vitA100g = vitA100g;
@@ -274,7 +274,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines D d'un Produit
      */
     public Float getVitD100g() {
         return vitD100g;
@@ -282,7 +282,7 @@ public class Produit {
 
     /**
      *
-     * @param vitD100g
+     * @param vitD100g d'un Produit
      */
     public void setVitD100g(Float vitD100g) {
         this.vitD100g = vitD100g;
@@ -290,7 +290,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines E d'un Produit
      */
     public Float getVitE100g() {
         return vitE100g;
@@ -298,7 +298,7 @@ public class Produit {
 
     /**
      *
-     * @param vitE100g
+     * @param vitE100g d'un Produit
      */
     public void setVitE100g(Float vitE100g) {
         this.vitE100g = vitE100g;
@@ -306,7 +306,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines K d'un Produit
      */
     public Float getVitK100g() {
         return vitK100g;
@@ -314,7 +314,7 @@ public class Produit {
 
     /**
      *
-     * @param vitK100g
+     * @param vitK100g d'un Produit
      */
     public void setVitK100g(Float vitK100g) {
         this.vitK100g = vitK100g;
@@ -322,7 +322,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines C d'un Produit
      */
     public Float getVitC100g() {
         return vitC100g;
@@ -330,7 +330,7 @@ public class Produit {
 
     /**
      *
-     * @param vitC100g
+     * @param vitC100g d'un Produit
      */
     public void setVitC100g(Float vitC100g) {
         this.vitC100g = vitC100g;
@@ -338,7 +338,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines B1 d'un Produit
      */
     public Float getVitB1100g() {
         return vitB1100g;
@@ -346,7 +346,7 @@ public class Produit {
 
     /**
      *
-     * @param vitB1100g
+     * @param vitB1100g d'un Produit
      */
     public void setVitB1100g(Float vitB1100g) {
         this.vitB1100g = vitB1100g;
@@ -354,7 +354,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines B2 d'un Produit
      */
     public Float getVitB2100g() {
         return vitB2100g;
@@ -362,7 +362,7 @@ public class Produit {
 
     /**
      *
-     * @param vitB2100g
+     * @param vitB2100g d'un Produit
      */
     public void setVitB2100g(Float vitB2100g) {
         this.vitB2100g = vitB2100g;
@@ -370,7 +370,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines PP d'un Produit
      */
     public Float getVitPP100g() {
         return vitPP100g;
@@ -378,7 +378,7 @@ public class Produit {
 
     /**
      *
-     * @param vitPP100g
+     * @param vitPP100g d'un Produit
      */
     public void setVitPP100g(Float vitPP100g) {
         this.vitPP100g = vitPP100g;
@@ -386,7 +386,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines B6 d'un Produit
      */
     public Float getVitB6100g() {
         return vitB6100g;
@@ -394,7 +394,7 @@ public class Produit {
 
     /**
      *
-     * @param vitB6100g
+     * @param vitB6100g d'un Produit
      */
     public void setVitB6100g(Float vitB6100g) {
         this.vitB6100g = vitB6100g;
@@ -402,7 +402,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines B9 d'un Produit
      */
     public Float getVitB9100g() {
         return vitB9100g;
@@ -410,7 +410,7 @@ public class Produit {
 
     /**
      *
-     * @param vitB9100g
+     * @param vitB9100g d'un Produit
      */
     public void setVitB9100g(Float vitB9100g) {
         this.vitB9100g = vitB9100g;
@@ -418,7 +418,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return les vitamines B12 d'un Produit
      */
     public Float getVitB12100g() {
         return vitB12100g;
@@ -426,7 +426,7 @@ public class Produit {
 
     /**
      *
-     * @param vitB12100g
+     * @param vitB12100g d'un Produit
      */
     public void setVitB12100g(Float vitB12100g) {
         this.vitB12100g = vitB12100g;
@@ -434,7 +434,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le calcium d'un Produit
      */
     public Float getCalcium100g() {
         return calcium100g;
@@ -442,7 +442,7 @@ public class Produit {
 
     /**
      *
-     * @param calcium100g
+     * @param calcium100g d'un Produit
      */
     public void setCalcium100g(Float calcium100g) {
         this.calcium100g = calcium100g;
@@ -450,7 +450,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le magnesium d'un Produit
      */
     public Float getMagnesium100g() {
         return magnesium100g;
@@ -458,7 +458,7 @@ public class Produit {
 
     /**
      *
-     * @param magnesium100g
+     * @param magnesium100g d'un Produit
      */
     public void setMagnesium100g(Float magnesium100g) {
         this.magnesium100g = magnesium100g;
@@ -466,7 +466,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return l'iron d'un Produit
      */
     public Float getIron100g() {
         return iron100g;
@@ -474,7 +474,7 @@ public class Produit {
 
     /**
      *
-     * @param iron100g
+     * @param iron100g d'un Produit
      */
     public void setIron100g(Float iron100g) {
         this.iron100g = iron100g;
@@ -482,7 +482,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le fer d'un Produit
      */
     public Float getFer100g() {
         return fer100g;
@@ -490,7 +490,7 @@ public class Produit {
 
     /**
      *
-     * @param fer100g
+     * @param fer100g d'un Produit
      */
     public void setFer100g(Float fer100g) {
         this.fer100g = fer100g;
@@ -498,7 +498,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return le betacarotene d'un Produit
      */
     public Float getBetaCarotene100g() {
         return betaCarotene100g;
@@ -506,7 +506,7 @@ public class Produit {
 
     /**
      *
-     * @param betaCarotene100g
+     * @param betaCarotene100g d'un Produit
      */
     public void setBetaCarotene100g(Float betaCarotene100g) {
         this.betaCarotene100g = betaCarotene100g;
@@ -514,7 +514,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la presence d'huile de palme d'un Produit
      */
     public Boolean getPresenceHuilePalme() {
         return presenceHuilePalme;
@@ -522,7 +522,7 @@ public class Produit {
 
     /**
      *
-     * @param presenceHuilePalme
+     * @param presenceHuilePalme d'un Produit
      */
     public void setPresenceHuilePalme(Boolean presenceHuilePalme) {
         this.presenceHuilePalme = presenceHuilePalme;
@@ -530,7 +530,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la liste d'allergènes d'un Produit
      */
     public List<Allergene> getListeAllergenes() {
         return listeAllergenes;
@@ -538,7 +538,7 @@ public class Produit {
 
     /**
      *
-     * @param listeAllergenes
+     * @param listeAllergenes d'un Produit
      */
     public void setListeAllergenes(List<Allergene> listeAllergenes) {
         this.listeAllergenes = listeAllergenes;
@@ -546,7 +546,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return la liste d'additifs d'un Produit
      */
     public List<Additif> getListeAdditifs() {
         return listeAdditifs;
@@ -554,7 +554,7 @@ public class Produit {
 
     /**
      *
-     * @param listeAdditifs
+     * @param listeAdditifs d'un Produit
      */
     public void setListeAdditifs(List<Additif> listeAdditifs) {
         this.listeAdditifs = listeAdditifs;
@@ -562,7 +562,7 @@ public class Produit {
 
     /**
      *
-     * @return
+     * @return l'affichage en String des informations d'un Produit
      */
     @Override
     public String toString() {

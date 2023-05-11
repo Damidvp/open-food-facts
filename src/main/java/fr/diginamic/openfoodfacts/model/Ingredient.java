@@ -37,7 +37,7 @@ public class Ingredient {
 
     /**
      *
-     * @return
+     * @return l'id d'un Ingredient
      */
     public Long getId() {
         return id;
@@ -45,7 +45,7 @@ public class Ingredient {
 
     /**
      *
-     * @param id
+     * @param id d'un Ingredient
      */
     public void setId(Long id) {
         this.id = id;
@@ -53,7 +53,7 @@ public class Ingredient {
 
     /**
      *
-     * @return
+     * @return le nom d'un Ingredient
      */
     public String getNom() {
         return nom;
@@ -61,16 +61,24 @@ public class Ingredient {
 
     /**
      *
-     * @param nom
+     * @param nom d'un Ingredient
      */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return la liste de Produit d'un Ingredient
+     */
     public List<Produit> getProduits() {
         return produits;
     }
 
+    /**
+     *
+     * @param produits d'un Ingredient
+     */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }

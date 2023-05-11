@@ -36,7 +36,7 @@ public class Marque {
 
     /**
      *
-     * @return
+     * @return l'id d'une Marque
      */
     public Long getId() {
         return id;
@@ -44,7 +44,7 @@ public class Marque {
 
     /**
      *
-     * @param id
+     * @param id d'une Marque
      */
     public void setId(Long id) {
         this.id = id;
@@ -52,7 +52,7 @@ public class Marque {
 
     /**
      *
-     * @return
+     * @return le nom d'une Marque
      */
     public String getNom() {
         return nom;
@@ -60,7 +60,7 @@ public class Marque {
 
     /**
      *
-     * @param nom
+     * @param nom d'une Marque
      */
     public void setNom(String nom) {
         this.nom = nom;
@@ -68,7 +68,7 @@ public class Marque {
 
     /**
      *
-     * @return
+     * @return la liste des Produit d'une Marque
      */
     public List<Produit> getProduits() {
         return produits;
@@ -76,7 +76,7 @@ public class Marque {
 
     /**
      *
-     * @param produits
+     * @param produits d'une Marque
      */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
