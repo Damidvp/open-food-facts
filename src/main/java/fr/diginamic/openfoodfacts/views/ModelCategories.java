@@ -14,18 +14,12 @@ import javax.swing.DefaultComboBoxModel;
  * @author dmouchagues
  */
 public class ModelCategories extends DefaultComboBoxModel<String> {
-
-    private CategorieDAO categorieDao = CategorieDAO.getInstance();
-    private List<Categorie> allCategories = categorieDao.getAll();
     
     /**
      * Create a new model for JComboBox of Categorie
      */
     public ModelCategories(){
-        this.addElement("***");
-        for(Categorie categorie : allCategories){
-            this.addElement(categorie.getNom());
-        }
+        super();
     }
     
 }

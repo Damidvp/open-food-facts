@@ -4,6 +4,8 @@
  */
 package fr.diginamic.openfoodfacts.views;
 
+import fr.diginamic.openfoodfacts.controller.MainController;
+
 /**
  *
  * @author dmouchagues
@@ -48,12 +50,13 @@ public class FrameOpenFoodFacts extends javax.swing.JFrame {
         setTitle("Open Food Facts");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jTable2.setModel(new ModelProduits("***", "***"));
+        jTable2.setModel(MainController.createModelProduits("***", "***"));
         jTable2.setColumnSelectionAllowed(true);
         jScrollPane2.setViewportView(jTable2);
         jTable2.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        jcbCategories.setModel(new ModelCategories());
+        jcbCategories.setModel(MainController
+            .createModelCategories());
         jcbCategories.setToolTipText("");
         jcbCategories.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,7 +64,8 @@ public class FrameOpenFoodFacts extends javax.swing.JFrame {
             }
         });
 
-        jcbMarques.setModel(new ModelMarques());
+        jcbMarques.setModel(MainController
+            .createModelMarques());
 
         jLabel2.setText("Marque :");
 
@@ -137,7 +141,7 @@ public class FrameOpenFoodFacts extends javax.swing.JFrame {
     private void refreshTable(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshTable
         String selectedCategorie = jcbCategories.getSelectedItem().toString();
         String selectedMarque = jcbMarques.getSelectedItem().toString();
-        ModelProduits modelProduits = new ModelProduits(selectedCategorie, selectedMarque);
+        ModelProduits modelProduits = MainController.createModelProduits(selectedCategorie, selectedMarque);
         jTable2.setModel(modelProduits);
         jTable2.repaint();
         modelProduits.fireTableDataChanged();

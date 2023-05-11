@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
 public class ModelProduits extends AbstractTableModel{
     
     private ProduitDAO produitDao = ProduitDAO.getInstance();
-    private String[] columns = {"ID", "Marques", "Catégorie", "Name", "Score"};
+    private String[] columns;
     private Object data[][];
     
     /**
@@ -28,38 +28,11 @@ public class ModelProduits extends AbstractTableModel{
      * @param rechCategorie selected in JComboBox
      * @param rechMarque selected in JComboBox
      */
-    public ModelProduits(String rechCategorie, String rechMarque){
-        data = getData(rechCategorie, rechMarque);
+    public ModelProduits(String[] columns, Object[][] data){
+        super();
+        this.columns = columns;
+        this.data = data;
     }
-    
-    private Object[][] getData(String rechCategorie, String rechMarque){
-        List<Produit> allProduits = produitDao.getAll();
-        Collections.sort(allProduits, new ComparatorScore());
-        List<Object[]> data = new ArrayList<>();
-        for(int i = 0; i<allProduits.size(); i++){
-            if(rechCategorie.equals("***") || allProduits.get(i).getCategorie().getNom().equals(rechCategorie)){
-                Object[] row = new Object[columns.length];
-                String marques = "";
-                for(Marque uneMarque : allProduits.get(i).getMarques()){
-                    marques += uneMarque.getNom() + ", ";
-                }
-                if(marques.contains(rechMarque) || rechMarque.equals("***")){
-                    row[0] = allProduits.get(i).getId();
-                    row[1] = marques.trim().substring(0, marques.length()-2);
-                    row[2] = allProduits.get(i).getCategorie().getNom();
-                    row[3] = allProduits.get(i).getNom();
-                    row[4] = allProduits.get(i).getScore();
-                    data.add(row);
-                }
-            } 
-        }
-        Object[][] dataObject = new Object[data.size()][columns.length];
-        for(int i=0; i<data.size(); i++){
-            dataObject[i] = data.get(i);
-        }
-        return dataObject;
-    }
-
     /**
      *
      * @return number of rows in the model
