@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,28 +44,20 @@ public class StockService {
     private MarqueDAO marqueDao = MarqueDAO.getInstance();
     private CategorieDAO categorieDao = CategorieDAO.getInstance();
     private ProduitDAO produitDao = ProduitDAO.getInstance();
-    
-    Map<String, Categorie> cacheCategories = new HashMap<>();
-    Map<String, Marque> cacheMarques = new HashMap<>();
-    Map<String, Additif> cacheAdditifs = new HashMap<>();
-    Map<String, Allergene> cacheAllergenes = new HashMap<>();
-    Map<String, Ingredient> cacheIngredients = new HashMap<>();
 
     private StockService() {
         try {
             List<String> linesFile = new ArrayList<>();
             Path pathFile = Paths.get("target/open-food-facts.csv"); //Chemin du fichier CSV
             linesFile = Files.readAllLines(pathFile, StandardCharsets.UTF_8);
-            
-            
-            
+
             for (int i = 1; i < linesFile.size(); i++) {
                 String[] tokens = linesFile.get(i).split("\\|");
-                if(tokens.length < 30){
+                if (tokens.length < 30) {
                     continue;
                 }
                 Produit produit = new Produit();
-                
+
                 saveCategorie(tokens, produit);
                 saveInfo(tokens, produit);
                 saveLists(tokens, produit);
@@ -97,8 +90,8 @@ public class StockService {
             return null;
         }
     }
-    
-    private String cleanMarqueName(String s){
+
+    private String cleanMarqueName(String s) {
         s = s.trim();
         return s;
     }
@@ -141,14 +134,13 @@ public class StockService {
     }
 
     private void saveCategorie(String[] tokens, Produit produit) {
-        Categorie categorieExistante = cacheCategories.get(cleanCategorieName(tokens[0]));
+        Categorie categorieExistante = categorieDao.getByName(tokens[0]);
         if (categorieExistante != null) {
             produit.setCategorie(categorieExistante);
         } else {
             Categorie categorie = new Categorie();
             categorie.setNom(cleanCategorieName(tokens[0]));
             categorieDao.save(categorie);
-            cacheCategories.put(cleanCategorieName(tokens[0]), categorie);
             produit.setCategorie(categorie);
         }
     }
@@ -157,28 +149,28 @@ public class StockService {
         produit.setNom(tokens[2]);
         produit.setScore(tokens[3].charAt(0));
 
-            produit.setEnergie100g(getValueOf(tokens[5])); //Si la valeur est une String vide, on affecte 0
-            produit.setGraisse100g(getValueOf(tokens[6]));
-            produit.setSucres100g(getValueOf(tokens[7]));
-            produit.setFibres100g(getValueOf(tokens[8]));
-            produit.setProteines100g(getValueOf(tokens[9]));
-            produit.setSel100g(getValueOf(tokens[10]));
-            produit.setVitA100g(getValueOf(tokens[11])); 
-            produit.setVitD100g(getValueOf(tokens[12]));
-            produit.setVitE100g(getValueOf(tokens[13]));
-            produit.setVitK100g(getValueOf(tokens[14]));
-            produit.setVitC100g(getValueOf(tokens[15]));
-            produit.setVitB1100g(getValueOf(tokens[16]));
-            produit.setVitB2100g(getValueOf(tokens[17]));
-            produit.setVitPP100g(getValueOf(tokens[18]));
-            produit.setVitB6100g(getValueOf(tokens[19]));
-            produit.setVitB9100g(getValueOf(tokens[20]));
-            produit.setVitB12100g(getValueOf(tokens[21]));
-            produit.setCalcium100g(getValueOf(tokens[22]));
-            produit.setMagnesium100g(getValueOf(tokens[23]));
-            produit.setIron100g(getValueOf(tokens[24]));
-            produit.setFer100g(getValueOf(tokens[25]));
-            produit.setBetaCarotene100g(getValueOf(tokens[26]));
+        produit.setEnergie100g(getValueOf(tokens[5])); //Si la valeur est une String vide, on affecte 0
+        produit.setGraisse100g(getValueOf(tokens[6]));
+        produit.setSucres100g(getValueOf(tokens[7]));
+        produit.setFibres100g(getValueOf(tokens[8]));
+        produit.setProteines100g(getValueOf(tokens[9]));
+        produit.setSel100g(getValueOf(tokens[10]));
+        produit.setVitA100g(getValueOf(tokens[11]));
+        produit.setVitD100g(getValueOf(tokens[12]));
+        produit.setVitE100g(getValueOf(tokens[13]));
+        produit.setVitK100g(getValueOf(tokens[14]));
+        produit.setVitC100g(getValueOf(tokens[15]));
+        produit.setVitB1100g(getValueOf(tokens[16]));
+        produit.setVitB2100g(getValueOf(tokens[17]));
+        produit.setVitPP100g(getValueOf(tokens[18]));
+        produit.setVitB6100g(getValueOf(tokens[19]));
+        produit.setVitB9100g(getValueOf(tokens[20]));
+        produit.setVitB12100g(getValueOf(tokens[21]));
+        produit.setCalcium100g(getValueOf(tokens[22]));
+        produit.setMagnesium100g(getValueOf(tokens[23]));
+        produit.setIron100g(getValueOf(tokens[24]));
+        produit.setFer100g(getValueOf(tokens[25]));
+        produit.setBetaCarotene100g(getValueOf(tokens[26]));
 
         produit.setPresenceHuilePalme(Boolean.valueOf(tokens[27]));
     }
@@ -194,69 +186,57 @@ public class StockService {
         String[] tokensAllergenes = tokens[28].split(",|;");
         String[] tokensAdditifs = tokens[29].split(",|;");
 
-        if (tokensMarques.length != 0) {
-            for (String uneMarque : tokensMarques) {
-                uneMarque = cleanMarqueName(uneMarque);
-                Marque marqueExistante = cacheMarques.get(uneMarque);
-                if (marqueExistante != null) {
-                    marques.add(marqueExistante);
+        for (String uneMarque : tokensMarques) {
+            uneMarque = cleanMarqueName(uneMarque);
+            Marque marqueExistante = marqueDao.getByName(uneMarque);
+            if (marqueExistante != null) {
+                marques.add(marqueExistante);
+            } else {
+                Marque marque = new Marque();
+                marque.setNom(uneMarque);
+                marques.add(marque);
+                marqueDao.save(marque);
+            }
+        }
+        for (String unIngredient : tokensIngredients) {
+            if (!unIngredient.equals("")) {
+                unIngredient = cleanIngredientName(unIngredient);
+                Ingredient ingredientExistant = ingredientDao.getByName(unIngredient);
+                if (ingredientExistant != null) {
+                    ingredients.add(ingredientExistant);
                 } else {
-                    Marque marque = new Marque();
-                    marque.setNom(uneMarque);
-                    marques.add(marque);
-                    cacheMarques.put(uneMarque, marque);
-                    marqueDao.save(marque);
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setNom(unIngredient);
+                    ingredients.add(ingredient);
+                    ingredientDao.save(ingredient);
                 }
             }
         }
-        if (tokensIngredients.length != 0) {
-            for (String unIngredient : tokensIngredients) {
-                if (!unIngredient.equals("")) {
-                    unIngredient = cleanIngredientName(unIngredient);
-                    Ingredient ingredientExistant = cacheIngredients.get(unIngredient);
-                    if (ingredientExistant != null) {
-                        ingredients.add(ingredientExistant);
-                    } else {
-                        Ingredient ingredient = new Ingredient();
-                        ingredient.setNom(unIngredient);
-                        ingredients.add(ingredient);
-                        cacheIngredients.put(unIngredient, ingredient);
-                        ingredientDao.save(ingredient);
-                    }
+        for (String unAllergene : tokensAllergenes) {
+            if (!unAllergene.equals("")) {
+                unAllergene = cleanAllergeneName(unAllergene);
+                Allergene allergeneExistant = allergeneDao.getByName(unAllergene);
+                if (allergeneExistant != null) {
+                    allergenes.add(allergeneExistant);
+                } else {
+                    Allergene allergene = new Allergene();
+                    allergene.setNom(unAllergene);
+                    allergenes.add(allergene);
+                    allergeneDao.save(allergene);
                 }
             }
         }
-        if (tokensAllergenes.length != 0) {
-            for (String unAllergene : tokensAllergenes) {
-                if (!unAllergene.equals("")) {
-                    unAllergene = cleanAllergeneName(unAllergene);
-                    Allergene allergeneExistant = cacheAllergenes.get(unAllergene);
-                    if (allergeneExistant != null) {
-                        allergenes.add(allergeneExistant);
-                    } else {
-                        Allergene allergene = new Allergene();
-                        allergene.setNom(unAllergene);
-                        allergenes.add(allergene);
-                        cacheAllergenes.put(unAllergene, allergene);
-                        allergeneDao.save(allergene);
-                    }
-                }
-            }
-        }
-        if (tokensAdditifs.length != 0) {
-            for (String unAdditif : tokensAdditifs) {
-                if (!unAdditif.equals("")) {
-                    unAdditif = cleanAdditifName(unAdditif);
-                    Additif additifExistant = cacheAdditifs.get(unAdditif);
-                    if (additifExistant != null) {
-                        additifs.add(additifExistant);
-                    } else {
-                        Additif additif = new Additif();
-                        additif.setNom(unAdditif);
-                        additifs.add(additif);
-                        cacheAdditifs.put(unAdditif, additif);
-                        additifDao.save(additif);
-                    }
+        for (String unAdditif : tokensAdditifs) {
+            if (!unAdditif.equals("")) {
+                unAdditif = cleanAdditifName(unAdditif);
+                Additif additifExistant = additifDao.getByName(unAdditif);
+                if (additifExistant != null) {
+                    additifs.add(additifExistant);
+                } else {
+                    Additif additif = new Additif();
+                    additif.setNom(unAdditif);
+                    additifs.add(additif);
+                    additifDao.save(additif);
                 }
             }
         }
